@@ -1,0 +1,67 @@
+{
+    "name": "pip-services-blobs-node",
+    "version": "1.0.0",
+    "author": "Conceptual Vision Consulting LLC",
+    "description": "File blobs microservice",
+    "contributors": [
+        {
+            "name": "Sergey Seroukhov",
+            "email": "seroukhov@gmail.com"
+        }
+    ],
+    "main": "./obj/src/index.js",
+    "typings": "./obj/src/index.d.ts",
+    "keywords": [
+        "pip.services", 
+        "files",
+        "blobs",
+        "s3",
+        "microservice"
+    ],
+    "noAnalyze": true,
+    "repository" : {
+        "type": "git",
+        "url": "ssh://git@github.com:pip-services-infrastructure/pip-services-blobs-net.git"
+    },
+    "license": "MIT",
+    "engines": {
+        "node": ">=0.6.14"
+    },
+    "private": true,
+    "scripts": {
+        "build": "tsc",
+        "watch": "tsc --watch",
+        "launch": "node run",
+        "relaunch": "tsc && node run",
+        "test": "mocha -t 10000 -R spec -u tdd --recursive ./obj/test",
+        "retest": "tsc && mocha -t 10000 -R spec -u tdd --recursive ./obj/test",
+        "benchmark": "matcha -R clean -I tdd ./obj/benchmark/run.js",
+        "rebenchmark": "tsc && matcha -R clean -I tdd ./obj/benchmark/run.js"
+    },
+    "dependencies": {
+        "pip-services-commons-node": "^2.0.0",
+        "pip-services-container-node": "^2.0.0",
+        "pip-services-data-node": "^2.0.0",
+        "pip-services-net-node": "^2.0.0",
+        "pip-services-aws-node": "^1.0.0"
+    },
+    "devDependencies": {
+        "@types/node": "*",
+        "@types/lodash": "^4.0.0",
+        "@types/async": "^2.0.0",
+        "@types/chai": "*",
+        "@types/mocha": "*",
+        "@types/mongodb": "^2.1.38",
+        "@types/mongoose": "^4.7.4",
+        "seneca": "^3.3.0",
+        "restify": "^4.3.0",
+        "bson": "*",
+        "gridfs-stream": "*",
+        "aws-sdk": "*",
+        "stream-buffers": "*",
+        "chai": "*",
+        "matcha": "*",
+        "memjs": "*",
+        "mocha": "*"
+    }
+}

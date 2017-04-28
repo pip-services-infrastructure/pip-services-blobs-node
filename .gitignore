@@ -1,0 +1,10 @@
+/node_modules
+/npm-debug.log
+/.idea
+/config/config.yaml
+/config/test_connections.yaml
+/data/blobs.test.json
+/data/blobs.json
+/data/blobs.test
+/data/blobs
+/obj/test
