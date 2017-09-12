@@ -122,7 +122,7 @@ export class BlobsController implements IConfigurable, IReferenceable, ICommanda
     }
 
     public deleteBlobById(correlationId: string, blobId: string,
-        callback?: (err: any, item: BlobInfoV1) => void): void {
+        callback?: (err: any) => void): void {
         this._persistence.deleteById(correlationId, blobId, callback);
     }
 

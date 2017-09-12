@@ -223,7 +223,9 @@ export class BlobsCommandSet extends CommandSet {
 				.withRequiredProperty("blob_id", TypeCode.String),
             (correlationId: string, args: Parameters, callback: (err: any, result: any) => void) => {
                 let blobId = args.getAsNullableString("blob_id");
-                this._logic.deleteBlobById(correlationId, blobId, callback);
+                this._logic.deleteBlobById(correlationId, blobId, (err) => {
+					callback(err, null);
+				});
 			}
 		);
 	}

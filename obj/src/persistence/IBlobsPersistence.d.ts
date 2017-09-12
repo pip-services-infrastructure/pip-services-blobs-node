@@ -9,7 +9,7 @@ export interface IBlobsPersistence extends IGetter<BlobInfoV1, string> {
     getOneById(correlationId: string, id: string, callback: (err: any, item: BlobInfoV1) => void): void;
     update(correlationId: string, item: BlobInfoV1, callback: (err: any, item: BlobInfoV1) => void): void;
     markCompleted(correlationId: string, ids: string[], callback: (err: any) => void): void;
-    deleteById(correlationId: string, id: string, callback?: (err: any, item: BlobInfoV1) => void): void;
+    deleteById(correlationId: string, id: string, callback?: (err: any) => void): void;
     deleteByIds(correlationId: string, ids: string[], callback?: (err: any) => void): void;
     isUriSupported(): boolean;
     getUri(correlationId: string, id: string, callback: (err: any, uri: string) => void): void;

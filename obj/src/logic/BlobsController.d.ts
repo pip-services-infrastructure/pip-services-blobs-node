@@ -31,6 +31,6 @@ export declare class BlobsController implements IConfigurable, IReferenceable, I
     endBlobRead(correlationId: string, blobId: string, callback?: (err: any) => void): void;
     updateBlobInfo(correlationId: string, blob: BlobInfoV1, callback: (err: any, item: BlobInfoV1) => void): void;
     markBlobsCompleted(correlationId: string, blobIds: string[], callback: (err: any) => void): void;
-    deleteBlobById(correlationId: string, blobId: string, callback?: (err: any, item: BlobInfoV1) => void): void;
+    deleteBlobById(correlationId: string, blobId: string, callback?: (err: any) => void): void;
     deleteBlobsByIds(correlationId: string, blobIds: string[], callback?: (err: any) => void): void;
 }

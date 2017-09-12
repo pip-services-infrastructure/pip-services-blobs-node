@@ -141,7 +141,9 @@ class BlobsCommandSet extends pip_services_commons_node_1.CommandSet {
         return new pip_services_commons_node_2.Command("delete_blob_by_id", new pip_services_commons_node_5.ObjectSchema(true)
             .withRequiredProperty("blob_id", pip_services_commons_node_7.TypeCode.String), (correlationId, args, callback) => {
             let blobId = args.getAsNullableString("blob_id");
-            this._logic.deleteBlobById(correlationId, blobId, callback);
+            this._logic.deleteBlobById(correlationId, blobId, (err) => {
+                callback(err, null);
+            });
         });
     }
     makeDeleteBlobsByIdsCommand() {

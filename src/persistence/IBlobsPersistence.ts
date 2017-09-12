@@ -22,7 +22,7 @@ export interface IBlobsPersistence extends IGetter<BlobInfoV1, string> {
         callback: (err: any) => void): void;
 
     deleteById(correlationId: string, id: string,
-        callback?: (err: any, item: BlobInfoV1) => void): void;
+        callback?: (err: any) => void): void;
 
     deleteByIds(correlationId: string, ids: string[],
         callback?: (err: any) => void): void;
