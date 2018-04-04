@@ -1,4 +1,6 @@
-import { YamlConfigReader } from 'pip-services-commons-node';
+let process = require('process');
+
+import { ConfigParams } from 'pip-services-commons-node';
 
 import { BlobsS3Persistence } from '../../src/persistence/BlobsS3Persistence';
 import { BlobsPersistenceFixture } from './BlobsPersistenceFixture';
@@ -7,17 +9,24 @@ suite('BlobsS3Persistence', ()=> {
     let persistence: BlobsS3Persistence;
     let fixture: BlobsPersistenceFixture;
 
-    let config = YamlConfigReader.readConfig(null, './config/test_connections.yaml', null);
-    let dbConfig = config.getSection('s3');
-    if (dbConfig.length() == 0)
-        return;
-
     setup((done) => {
+        
+        var AWS_ARN = process.env["AWS_ARN"] || "arn:aws:s3:us-east-1::pip-services-blobs";
+        // TO DO: insert default value for AWS keys
+        var AWS_ACCESS_ID = process.env["AWS_ACCESS_ID"] || "";
+        var AWS_ACCESS_KEY = process.env["AWS_ACCESS_KEY"] || "";
+
+        var dbConfig = ConfigParams.fromTuples(
+            "connection.arn", AWS_ARN,
+            "credential.access_id", AWS_ACCESS_ID,
+            "credential.access_key", AWS_ACCESS_KEY
+        );
+
         persistence = new BlobsS3Persistence();
         persistence.configure(dbConfig);
 
         fixture = new BlobsPersistenceFixture(persistence);
-
+        
         persistence.open(null, (err: any) => {
             persistence.clear(null, (err) => {
                 done(err);
