@@ -9,15 +9,17 @@ suite('BlobsS3Persistence', ()=> {
     let persistence: BlobsS3Persistence;
     let fixture: BlobsPersistenceFixture;
 
+    var S3_ARN = process.env["S3_ARN"] || "";
+    var AWS_ACCESS_ID = process.env["AWS_ACCESS_ID"] || "";
+    var AWS_ACCESS_KEY = process.env["AWS_ACCESS_KEY"] || "";
+
+    if (S3_ARN == "" || AWS_ACCESS_ID == "" || AWS_ACCESS_KEY == "")
+        return;
+
     setup((done) => {
-        
-        var AWS_ARN = process.env["AWS_ARN"] || "arn:aws:s3:us-east-1::pip-services-blobs";
-        // TO DO: insert default value for AWS keys
-        var AWS_ACCESS_ID = process.env["AWS_ACCESS_ID"] || "";
-        var AWS_ACCESS_KEY = process.env["AWS_ACCESS_KEY"] || "";
 
         var dbConfig = ConfigParams.fromTuples(
-            "connection.arn", AWS_ARN,
+            "connection.arn", S3_ARN,
             "credential.access_id", AWS_ACCESS_ID,
             "credential.access_key", AWS_ACCESS_KEY
         );

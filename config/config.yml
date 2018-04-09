@@ -34,13 +34,12 @@
 
 {{#if S3_ENABLED}}
 # S3 Persistence
-# TO DO: insert default value for AWS keys
 - descriptor: "pip-services-blobs:persistence:s3:default:1.0"
   connection:
-    arn: {{{AWS_ARN}}}{{#unless AWS_ARN}}arn:aws:s3:us-east-1::pip-services-blobs{{/unless}}
+    arn: {{{S3_ARN}}}
   credential:
-    access_id: {{{AWS_ACCESS_ID}}}{{#unless AWS_ACCESS_ID}}""{{/unless}}
-    access_key: {{{AWS_ACCESS_KEY}}}{{#unless AWS_ACCESS_KEY}}""{{/unless}}
+    access_id: {{{AWS_ACCESS_ID}}}
+    access_key: {{{AWS_ACCESS_KEY}}}
 {{/if}}
 
 {{#unless MEMORY_ENABLED}}{{#unless FILE_ENABLED}}{{#unless MONGO_ENABLED}}{{#unless S3_ENABLED}}
