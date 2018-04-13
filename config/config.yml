@@ -1,11 +1,38 @@
 ---
+# Container descriptor
+- descriptor: "pip-services:context-info:default:default:1.0"
+  name: "pip-services-blobs"
+  description: "Blobs microservice for pip-services"
+
 # Console logger
 - descriptor: "pip-services-commons:logger:console:default:1.0"
   level: "trace"
 
+{{#if ELASTICSEARCH_LOGGING_ENABLED}}
+# ElasticSearch logger
+- descriptor: "pip-services:logger:elasticsearch:default:1.0"
+  level: "info"
+  connection:
+    protocol: http
+    host: {{ELASTICSEARCH_LOGGING_SERVICE_HOST}}
+    port: {{ELASTICSEARCH_LOGGING_SERVICE_PORT}}
+{{/if}}
+
 # Performance counters that posts values to log
 - descriptor: "pip-services-commons:counters:log:default:1.0"
   level: "trace"
+
+
+{{#if PUSHGATEWAY_METRICS_ENABLED}}
+# Prometheus performance counters
+- descriptor: "pip-services:counters:prometheus:default:1.0"
+  level: "trace"
+  interval: "30000"  
+  connection:
+    protocol: http
+    host: {{PUSHGATEWAY_METRICS_SERVICE_HOST}}
+    port: {{PUSHGATEWAY_METRICS_SERVICE_PORT}}
+{{/if}}
 
 {{#if MEMORY_ENABLED}}
 # In-memory persistence. Use only for testing!
@@ -50,20 +77,25 @@
 # Default controller
 - descriptor: "pip-services-blobs:controller:default:default:1.0"
 
-# HTTP endpoint version 1.0
-- descriptor: "pip-services-blobs:service:http:default:1.0"
+# Common HTTP endpoint
+- descriptor: "pip-services:endpoint:http:default:1.0"
   connection:
     protocol: "http"
     host: "0.0.0.0"
     port: 8080
 
-{{#if ELASTICSEARCH_LOGGING_ENABLED}}
-# ElasticSearch logger
-- descriptor: "pip-services:logger:elasticsearch:default:1.0"
-  level: "info"
-  index: "pip-services-blobs"
+# HTTP endpoint version 1.0
+- descriptor: "pip-services-blobs:service:http:default:1.0"
+
+# Heartbeat service
+- descriptor: "pip-services:heartbeat-service:http:default:1.0"
+
+# Status service
+- descriptor: "pip-services:status-service:http:default:1.0"
+
+# Prometheus metrics service
+- descriptor: "pip-services:metrics-service:prometheus:default:1.0"
   connection:
-    protocol: http
-    host: {{ELASTICSEARCH_LOGGING_SERVICE_HOST}}
-    port: {{ELASTICSEARCH_LOGGING_SERVICE_PORT}}
-{{/if}}
+    protocol: "http"
+    host: "0.0.0.0"
+    port: 8082
