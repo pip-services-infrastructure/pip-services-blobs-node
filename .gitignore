@@ -4,3 +4,4 @@
 /data/blobs.test.json
 /data/blobs.json
 /obj/test
+/docker/id_rsa*
