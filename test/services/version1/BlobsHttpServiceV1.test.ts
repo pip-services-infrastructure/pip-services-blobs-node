@@ -67,7 +67,7 @@ suite('BlobsHttpServiceV1', ()=> {
                     blobId, 'test', 'file-' + blobId + '.dat', 6, 'application/binary'
                 );
 
-                rest.post('/blobs/begin_blob_write',
+                rest.post('/v1/blobs/begin_blob_write',
                     {
                         blob: blob
                     },
@@ -82,7 +82,7 @@ suite('BlobsHttpServiceV1', ()=> {
             (callback) => {
                 let chunk = Buffer.from([1, 2, 3]).toString('base64');
 
-                rest.post('/blobs/write_blob_chunk',
+                rest.post('/v1/blobs/write_blob_chunk',
                     {
                         token: token,
                         chunk: chunk
@@ -98,7 +98,7 @@ suite('BlobsHttpServiceV1', ()=> {
             (callback) => {
                 let chunk = Buffer.from([4, 5, 6]).toString('base64');
 
-                rest.post('/blobs/end_blob_write',
+                rest.post('/v1/blobs/end_blob_write',
                     {
                         token: token,
                         chunk: chunk
@@ -111,7 +111,7 @@ suite('BlobsHttpServiceV1', ()=> {
             },
         // Start reading
             (callback) => {
-                rest.post('/blobs/begin_blob_read',
+                rest.post('/v1/blobs/begin_blob_read',
                     {
                         blob_id: blobId
                     },
@@ -126,7 +126,7 @@ suite('BlobsHttpServiceV1', ()=> {
             },
         // Read first chunk
             (callback) => {
-                rest.post('/blobs/read_blob_chunk',
+                rest.post('/v1/blobs/read_blob_chunk',
                     {
                         blob_id: blobId,
                         skip: 0,
@@ -149,7 +149,7 @@ suite('BlobsHttpServiceV1', ()=> {
             },
         // Get blobs
             (callback) => {
-                rest.post('/blobs/get_blobs_by_filter',
+                rest.post('/v1/blobs/get_blobs_by_filter',
                     {
                     },
                     (err, req, res, page) => {
@@ -163,7 +163,7 @@ suite('BlobsHttpServiceV1', ()=> {
             },
         // Delete blob
             (callback) => {
-                rest.post('/blobs/delete_blobs_by_ids',
+                rest.post('/v1/blobs/delete_blobs_by_ids',
                     {
                         blob_ids: [blobId]
                     },
@@ -175,7 +175,7 @@ suite('BlobsHttpServiceV1', ()=> {
             },
         // Try to get deleted blob
             (callback) => {
-                rest.post('/blobs/get_blob_by_id',
+                rest.post('/v1/blobs/get_blob_by_id',
                     {
                         blob_id: blobId
                     },
