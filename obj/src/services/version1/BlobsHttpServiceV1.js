@@ -4,7 +4,7 @@ const pip_services_commons_node_1 = require("pip-services-commons-node");
 const pip_services_net_node_1 = require("pip-services-net-node");
 class BlobsHttpServiceV1 extends pip_services_net_node_1.CommandableHttpService {
     constructor() {
-        super('blobs');
+        super('v1/blobs');
         this._dependencyResolver.put('controller', new pip_services_commons_node_1.Descriptor('pip-services-blobs', 'controller', 'default', '*', '1.0'));
     }
 }
