@@ -205,7 +205,7 @@ export class BlobsFilePersistence extends BlobsMemoryPersistence {
             return;
         }
 
-        super.beginRead(correlationId, id, callback);
+        super.getOneById(correlationId, id, callback);
     }
 
     public readChunk(correlationId: string, id: string, skip: number, take: number,
