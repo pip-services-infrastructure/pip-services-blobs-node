@@ -9,16 +9,16 @@ suite('BlobsS3Persistence', ()=> {
     let persistence: BlobsS3Persistence;
     let fixture: BlobsPersistenceFixture;
 
-    var S3_ARN = process.env["S3_ARN"] || "";
-    var AWS_ACCESS_ID = process.env["AWS_ACCESS_ID"] || "";
-    var AWS_ACCESS_KEY = process.env["AWS_ACCESS_KEY"] || "";
+    let S3_ARN = process.env["S3_ARN"] || "";
+    let AWS_ACCESS_ID = process.env["AWS_ACCESS_ID"] || "";
+    let AWS_ACCESS_KEY = process.env["AWS_ACCESS_KEY"] || "";
 
     if (S3_ARN == "" || AWS_ACCESS_ID == "" || AWS_ACCESS_KEY == "")
         return;
 
     setup((done) => {
 
-        var dbConfig = ConfigParams.fromTuples(
+        let dbConfig = ConfigParams.fromTuples(
             "connection.arn", S3_ARN,
             "credential.access_id", AWS_ACCESS_ID,
             "credential.access_key", AWS_ACCESS_KEY
