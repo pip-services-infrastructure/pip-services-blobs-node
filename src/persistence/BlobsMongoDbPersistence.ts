@@ -8,7 +8,7 @@ import { ICleanable } from 'pip-services-commons-node';
 import { BadRequestException } from 'pip-services-commons-node';
 import { NotFoundException } from 'pip-services-commons-node';
 import { IOpenable } from 'pip-services-commons-node';
-import { MongoDbPersistence } from 'pip-services-data-node';
+import { MongoDbPersistence } from 'pip-services-mongodb-node';
 import { IdGenerator } from 'pip-services-commons-node';
 import { BooleanConverter } from 'pip-services-commons-node';
 import { DateTimeConverter } from 'pip-services-commons-node';

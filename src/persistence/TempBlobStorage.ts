@@ -29,7 +29,7 @@ export class TempBlobStorage implements IConfigurable, IOpenable, ICleanable {
         this._writeTimeout = config.getAsLongWithDefault('options.write_timeout', this._writeTimeout);
     }
 
-    public isOpened(): boolean {
+    public isOpen(): boolean {
         return this._opened;
     }
 

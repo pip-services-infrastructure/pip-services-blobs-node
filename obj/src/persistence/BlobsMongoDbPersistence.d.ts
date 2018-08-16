@@ -1,5 +1,5 @@
 import { ConfigParams } from 'pip-services-commons-node';
-import { MongoDbPersistence } from 'pip-services-data-node';
+import { MongoDbPersistence } from 'pip-services-mongodb-node';
 import { FilterParams } from 'pip-services-commons-node';
 import { PagingParams } from 'pip-services-commons-node';
 import { DataPage } from 'pip-services-commons-node';

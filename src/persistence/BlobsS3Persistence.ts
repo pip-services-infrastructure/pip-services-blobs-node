@@ -9,9 +9,9 @@ import { IReferenceable } from 'pip-services-commons-node';
 import { IReferences } from 'pip-services-commons-node';
 import { Schema } from 'pip-services-commons-node';
 import { ConfigParams } from 'pip-services-commons-node';
-import { CompositeLogger } from 'pip-services-commons-node';
-import { CompositeCounters } from 'pip-services-commons-node';
-import { Timing } from 'pip-services-commons-node';
+import { CompositeLogger } from 'pip-services-components-node';
+import { CompositeCounters } from 'pip-services-components-node';
+import { Timing } from 'pip-services-components-node';
 import { IdGenerator } from 'pip-services-commons-node';
 import { NotFoundException } from 'pip-services-commons-node';
 import { BadRequestException } from 'pip-services-commons-node';
@@ -87,12 +87,12 @@ export class BlobsS3Persistence
         this._dependencyResolver.setReferences(references);
     }
 
-    public isOpened(): boolean {
+    public isOpen(): boolean {
         return this._opened;
     }
 
     public open(correlationId: string, callback: (err?: any) => void): void {
-        if (this.isOpened()) {
+        if (this.isOpen()) {
             if (callback) callback();
             return;
         }

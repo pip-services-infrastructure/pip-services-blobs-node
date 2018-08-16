@@ -1,7 +1,7 @@
 /node_modules
 /npm-debug.log
 /.idea
-/data/blobs.test.json
-/data/blobs.json
+/data/blobs.test/*
+/data/temp/*
 /obj/test
 /docker/id_rsa*

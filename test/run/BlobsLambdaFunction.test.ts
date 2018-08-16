@@ -5,7 +5,7 @@ let assert = require('chai').assert;
 import { Descriptor } from 'pip-services-commons-node';
 import { ConfigParams } from 'pip-services-commons-node';
 import { References } from 'pip-services-commons-node';
-import { ConsoleLogger } from 'pip-services-commons-node';
+import { ConsoleLogger } from 'pip-services-components-node';
 import { IdGenerator } from 'pip-services-commons-node';
 
 import { BlobInfoV1 } from '../../src/data/version1/BlobInfoV1';
@@ -17,7 +17,7 @@ suite('BlobsLambdaFunction', ()=> {
 
     suiteSetup((done) => {
         let config = ConfigParams.fromTuples(
-            'logger.descriptor', 'pip-services-commons:logger:console:default:1.0',
+            'logger.descriptor', 'pip-services:logger:console:default:1.0',
             'persistence.descriptor', 'pip-services-blobs:persistence:memory:default:1.0',
             'controller.descriptor', 'pip-services-blobs:controller:default:default:1.0'
         );

@@ -13,7 +13,7 @@ export declare class TempBlobStorage implements IConfigurable, IOpenable, IClean
     private _opened;
     constructor(path?: string);
     configure(config: ConfigParams): void;
-    isOpened(): boolean;
+    isOpen(): boolean;
     open(correlationId: string, callback?: (err: any) => void): void;
     close(correlationId: string, callback?: (err: any) => void): void;
     makeFileName(id: string): string;

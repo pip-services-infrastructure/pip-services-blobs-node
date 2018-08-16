@@ -22,7 +22,7 @@ class TempBlobStorage {
         this._cleanupTimeout = config.getAsLongWithDefault('options.cleanup_timeout', this._cleanupTimeout);
         this._writeTimeout = config.getAsLongWithDefault('options.write_timeout', this._writeTimeout);
     }
-    isOpened() {
+    isOpen() {
         return this._opened;
     }
     open(correlationId, callback) {

@@ -162,7 +162,7 @@ class BlobsFilePersistence extends BlobsMemoryPersistence_1.BlobsMemoryPersisten
             callback(err, null);
             return;
         }
-        super.beginRead(correlationId, id, callback);
+        super.getOneById(correlationId, id, callback);
     }
     readChunk(correlationId, id, skip, take, callback) {
         fs.open(this.makeFileName(id), 'r', (err, fd) => {
