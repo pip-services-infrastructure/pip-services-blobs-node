@@ -165,19 +165,22 @@ export class BlobsMemoryPersistence
         }
 
         // Enforce maximum size
-        if (this._maxBlobSize > 0 && oldBuffer.length + chunk.length > this._maxBlobSize) {
+        let chunkLength = chunk ? chunk.length : 0;
+        if (this._maxBlobSize > 0 && oldBuffer.length + chunkLength > this._maxBlobSize) {
             let err = new BadRequestException(
                 correlationId,
                 'BLOB_TOO_LARGE',
                 'Blob ' + id + ' exceeds allowed maximum size of ' + this._maxBlobSize
             ).withDetails('blob_id', id)
-            .withDetails('size', oldBuffer.length + chunk.length)
+            .withDetails('size', oldBuffer.length + chunkLength)
             .withDetails('max_size', this._maxBlobSize);
             callback(err, null);
             return;
         }
 
-        let buffer = Buffer.from(chunk, 'base64');
+        let buffer = new Buffer("", "base64");
+        if (chunk) 
+            buffer = Buffer.from(chunk, 'base64');
         this._content[id] = Buffer.concat([oldBuffer, buffer]);
 
         callback(null, token);
