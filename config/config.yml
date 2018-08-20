@@ -5,11 +5,11 @@
   description: "Blobs microservice for pip-services"
 
 # Console logger
-- descriptor: "pip-services-commons:logger:console:default:1.0"
+- descriptor: "pip-services:logger:console:default:1.0"
   level: "trace"
 
 # Performance counters that posts values to log
-- descriptor: "pip-services-commons:counters:log:default:1.0"
+- descriptor: "pip-services:counters:log:default:1.0"
   level: "trace"
 
 {{#if MEMORY_ENABLED}}
