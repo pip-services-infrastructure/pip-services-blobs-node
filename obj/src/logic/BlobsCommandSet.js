@@ -42,7 +42,8 @@ class BlobsCommandSet extends pip_services_commons_node_1.CommandSet {
     makeGetBlobsByIdsCommand() {
         return new pip_services_commons_node_2.Command("get_blobs_by_ids", new pip_services_commons_node_5.ObjectSchema(true)
             .withRequiredProperty("blob_ids", new pip_services_commons_node_6.ArraySchema(pip_services_commons_node_7.TypeCode.String)), (correlationId, args, callback) => {
-            let blobIds = args.get("blob_id");
+            let temp = args.getAsString("blob_ids");
+            let blobIds = temp.split(',');
             this._logic.getBlobsByIds(correlationId, blobIds, callback);
         });
     }

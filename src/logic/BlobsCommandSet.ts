@@ -64,7 +64,8 @@ export class BlobsCommandSet extends CommandSet {
 			new ObjectSchema(true)
 				.withRequiredProperty("blob_ids", new ArraySchema(TypeCode.String)),
             (correlationId: string, args: Parameters, callback: (err: any, result: any) => void) => {
-                let blobIds = args.get("blob_id");
+				let temp: string = args.getAsString("blob_ids");
+				let blobIds = temp.split(',');
                 this._logic.getBlobsByIds(correlationId, blobIds, callback);
             }
 		);
