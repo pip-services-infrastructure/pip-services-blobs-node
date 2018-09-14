@@ -1,12 +1,13 @@
 import { Factory } from 'pip-services-components-node';
+import { Descriptor } from 'pip-services-commons-node';
 export declare class BlobsServiceFactory extends Factory {
-    static Descriptor: any;
-    static MemoryPersistenceDescriptor: any;
-    static FilePersistenceDescriptor: any;
-    static MongoDbPersistenceDescriptor: any;
-    static S3PersistenceDescriptor: any;
-    static ControllerDescriptor: any;
-    static SenecaServiceDescriptor: any;
-    static HttpServiceDescriptor: any;
+    static Descriptor: Descriptor;
+    static MemoryPersistenceDescriptor: Descriptor;
+    static FilePersistenceDescriptor: Descriptor;
+    static MongoDbPersistenceDescriptor: Descriptor;
+    static S3PersistenceDescriptor: Descriptor;
+    static ControllerDescriptor: Descriptor;
+    static SenecaServiceDescriptor: Descriptor;
+    static HttpServiceDescriptor: Descriptor;
     constructor();
 }
