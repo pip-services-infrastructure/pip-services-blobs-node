@@ -2,11 +2,11 @@ let _ = require('lodash');
 let async = require('async');
 let fs = require('fs');
 
-import { ConfigParams } from 'pip-services-commons-node';
-import { IConfigurable } from 'pip-services-commons-node';
-import { IOpenable } from 'pip-services-commons-node';
-import { ICleanable } from 'pip-services-commons-node';
-import { BadRequestException } from 'pip-services-commons-node';
+import { ConfigParams } from 'pip-services3-commons-node';
+import { IConfigurable } from 'pip-services3-commons-node';
+import { IOpenable } from 'pip-services3-commons-node';
+import { ICleanable } from 'pip-services3-commons-node';
+import { BadRequestException } from 'pip-services3-commons-node';
 
 export class TempBlobStorage implements IConfigurable, IOpenable, ICleanable {
     private _path: string = './data/temp';

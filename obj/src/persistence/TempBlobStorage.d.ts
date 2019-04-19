@@ -1,8 +1,7 @@
-/// <reference types="node" />
-import { ConfigParams } from 'pip-services-commons-node';
-import { IConfigurable } from 'pip-services-commons-node';
-import { IOpenable } from 'pip-services-commons-node';
-import { ICleanable } from 'pip-services-commons-node';
+import { ConfigParams } from 'pip-services3-commons-node';
+import { IConfigurable } from 'pip-services3-commons-node';
+import { IOpenable } from 'pip-services3-commons-node';
+import { ICleanable } from 'pip-services3-commons-node';
 export declare class TempBlobStorage implements IConfigurable, IOpenable, ICleanable {
     private _path;
     private _maxBlobSize;

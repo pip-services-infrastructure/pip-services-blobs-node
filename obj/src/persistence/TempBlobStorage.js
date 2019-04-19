@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 let _ = require('lodash');
 let async = require('async');
 let fs = require('fs');
-const pip_services_commons_node_1 = require("pip-services-commons-node");
+const pip_services3_commons_node_1 = require("pip-services3-commons-node");
 class TempBlobStorage {
     constructor(path) {
         this._path = './data/temp';
@@ -81,7 +81,7 @@ class TempBlobStorage {
             // Enforce max blob size
             size = size + buffer.length;
             if (size > this._maxBlobSize) {
-                let err = new pip_services_commons_node_1.BadRequestException(correlationId, 'BLOB_TOO_LARGE', 'Blob ' + id + ' exceeds allowed maximum size of ' + this._maxBlobSize).withDetails('blob_id', id)
+                let err = new pip_services3_commons_node_1.BadRequestException(correlationId, 'BLOB_TOO_LARGE', 'Blob ' + id + ' exceeds allowed maximum size of ' + this._maxBlobSize).withDetails('blob_id', id)
                     .withDetails('size', size)
                     .withDetails('max_size', this._maxBlobSize);
             }

@@ -1,12 +1,12 @@
-import { ConfigParams } from 'pip-services-commons-node';
-import { IConfigurable } from 'pip-services-commons-node';
-import { IReferences } from 'pip-services-commons-node';
-import { IReferenceable } from 'pip-services-commons-node';
-import { FilterParams } from 'pip-services-commons-node';
-import { PagingParams } from 'pip-services-commons-node';
-import { DataPage } from 'pip-services-commons-node';
-import { ICommandable } from 'pip-services-commons-node';
-import { CommandSet } from 'pip-services-commons-node';
+import { ConfigParams } from 'pip-services3-commons-node';
+import { IConfigurable } from 'pip-services3-commons-node';
+import { IReferences } from 'pip-services3-commons-node';
+import { IReferenceable } from 'pip-services3-commons-node';
+import { FilterParams } from 'pip-services3-commons-node';
+import { PagingParams } from 'pip-services3-commons-node';
+import { DataPage } from 'pip-services3-commons-node';
+import { ICommandable } from 'pip-services3-commons-node';
+import { CommandSet } from 'pip-services3-commons-node';
 import { BlobInfoV1 } from '../data/version1/BlobInfoV1';
 import { IBlobsController } from './IBlobsController';
 export declare class BlobsController implements IConfigurable, IReferenceable, ICommandable, IBlobsController {
@@ -21,7 +21,7 @@ export declare class BlobsController implements IConfigurable, IReferenceable, I
     getBlobsByIds(correlationId: string, blobIds: string[], callback: (err: any, blobs: BlobInfoV1[]) => void): void;
     getBlobById(correlationId: string, blobId: string, callback: (err: any, blob: BlobInfoV1) => void): void;
     getBlobUriById(correlationId: string, blobId: string, callback: (err: any, uri: string) => void): void;
-    private normalizeName(name);
+    private normalizeName;
     beginBlobWrite(correlationId: string, blob: BlobInfoV1, callback: (err: any, token: string) => void): void;
     writeBlobChunk(correlationId: string, token: string, chunk: string, callback: (err: any, token: string) => void): void;
     endBlobWrite(correlationId: string, token: string, chunk: string, callback?: (err: any, blob: BlobInfoV1) => void): void;

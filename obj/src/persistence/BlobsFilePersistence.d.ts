@@ -1,5 +1,5 @@
-import { ConfigParams } from 'pip-services-commons-node';
-import { JsonFilePersister } from 'pip-services-data-node';
+import { ConfigParams } from 'pip-services3-commons-node';
+import { JsonFilePersister } from 'pip-services3-data-node';
 import { BlobsMemoryPersistence } from './BlobsMemoryPersistence';
 import { BlobInfoV1 } from '../data/version1/BlobInfoV1';
 import { TempBlobStorage } from './TempBlobStorage';

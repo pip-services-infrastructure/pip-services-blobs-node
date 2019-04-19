@@ -2,13 +2,13 @@ let _ = require('lodash');
 let async = require('async');
 let fs = require('fs');
 
-import { ConfigParams } from 'pip-services-commons-node';
-import { FilterParams } from 'pip-services-commons-node';
-import { PagingParams } from 'pip-services-commons-node';
-import { DataPage } from 'pip-services-commons-node';
-import { JsonFilePersister } from 'pip-services-data-node';
-import { NotFoundException } from 'pip-services-commons-node';
-import { BadRequestException } from 'pip-services-commons-node';
+import { ConfigParams } from 'pip-services3-commons-node';
+import { FilterParams } from 'pip-services3-commons-node';
+import { PagingParams } from 'pip-services3-commons-node';
+import { DataPage } from 'pip-services3-commons-node';
+import { JsonFilePersister } from 'pip-services3-data-node';
+import { NotFoundException } from 'pip-services3-commons-node';
+import { BadRequestException } from 'pip-services3-commons-node';
 
 import { BlobsMemoryPersistence } from './BlobsMemoryPersistence';
 import { BlobInfoV1 } from '../data/version1/BlobInfoV1';

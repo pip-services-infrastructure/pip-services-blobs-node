@@ -1,5 +1,5 @@
-import { Factory } from 'pip-services-components-node';
-import { Descriptor } from 'pip-services-commons-node';
+import { Factory } from 'pip-services3-components-node';
+import { Descriptor } from 'pip-services3-commons-node';
 
 import { BlobsMongoDbPersistence } from '../persistence/BlobsMongoDbPersistence';
 import { BlobsFilePersistence } from '../persistence/BlobsFilePersistence';
@@ -8,7 +8,6 @@ import { BlobsS3Persistence } from '../persistence/BlobsS3Persistence';
 
 import { BlobsController } from '../logic/BlobsController';
 import { BlobsHttpServiceV1 } from '../services/version1/BlobsHttpServiceV1';
-import { BlobsSenecaServiceV1 } from '../services/version1/BlobsSenecaServiceV1'; 
 
 export class BlobsServiceFactory extends Factory {
 	public static Descriptor = new Descriptor("pip-services-blobs", "factory", "default", "default", "1.0");
@@ -19,7 +18,6 @@ export class BlobsServiceFactory extends Factory {
 	public static S3PersistenceDescriptor = new Descriptor("pip-services-blobs", "persistence", "s3", "*", "1.0");
 
 	public static ControllerDescriptor = new Descriptor("pip-services-blobs", "controller", "default", "*", "1.0");
-	public static SenecaServiceDescriptor = new Descriptor("pip-services-blobs", "service", "seneca", "*", "1.0");
 	public static HttpServiceDescriptor = new Descriptor("pip-services-blobs", "service", "http", "*", "1.0");
 	
 	constructor() {
@@ -30,7 +28,6 @@ export class BlobsServiceFactory extends Factory {
 		this.registerAsType(BlobsServiceFactory.S3PersistenceDescriptor, BlobsMongoDbPersistence);
 
 		this.registerAsType(BlobsServiceFactory.ControllerDescriptor, BlobsController);
-		this.registerAsType(BlobsServiceFactory.SenecaServiceDescriptor, BlobsSenecaServiceV1);
 		this.registerAsType(BlobsServiceFactory.HttpServiceDescriptor, BlobsHttpServiceV1);
 	}
 	

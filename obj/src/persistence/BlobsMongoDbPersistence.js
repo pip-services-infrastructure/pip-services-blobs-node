@@ -3,18 +3,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 let _ = require('lodash');
 let async = require('async');
 let stream = require('stream');
-const pip_services_commons_node_1 = require("pip-services-commons-node");
-const pip_services_commons_node_2 = require("pip-services-commons-node");
-const pip_services_commons_node_3 = require("pip-services-commons-node");
-const pip_services_mongodb_node_1 = require("pip-services-mongodb-node");
-const pip_services_commons_node_4 = require("pip-services-commons-node");
-const pip_services_commons_node_5 = require("pip-services-commons-node");
-const pip_services_commons_node_6 = require("pip-services-commons-node");
-const pip_services_commons_node_7 = require("pip-services-commons-node");
-const pip_services_commons_node_8 = require("pip-services-commons-node");
-const pip_services_commons_node_9 = require("pip-services-commons-node");
+const pip_services3_commons_node_1 = require("pip-services3-commons-node");
+const pip_services3_commons_node_2 = require("pip-services3-commons-node");
+const pip_services3_commons_node_3 = require("pip-services3-commons-node");
+const pip_services3_mongodb_node_1 = require("pip-services3-mongodb-node");
+const pip_services3_commons_node_4 = require("pip-services3-commons-node");
+const pip_services3_commons_node_5 = require("pip-services3-commons-node");
+const pip_services3_commons_node_6 = require("pip-services3-commons-node");
+const pip_services3_commons_node_7 = require("pip-services3-commons-node");
+const pip_services3_commons_node_8 = require("pip-services3-commons-node");
+const pip_services3_commons_node_9 = require("pip-services3-commons-node");
 const TempBlobStorage_1 = require("./TempBlobStorage");
-class BlobsMongoDbPersistence extends pip_services_mongodb_node_1.MongoDbPersistence {
+class BlobsMongoDbPersistence extends pip_services3_mongodb_node_1.MongoDbPersistence {
     constructor() {
         super('blobs', null);
         this._storage = new TempBlobStorage_1.TempBlobStorage('./data/temp');
@@ -53,7 +53,7 @@ class BlobsMongoDbPersistence extends pip_services_mongodb_node_1.MongoDbPersist
         });
     }
     composeFilter(filter) {
-        filter = filter || new pip_services_commons_node_7.FilterParams();
+        filter = filter || new pip_services3_commons_node_7.FilterParams();
         let criteria = [];
         let search = filter.getAsNullableString('search');
         if (search != null) {
@@ -96,7 +96,7 @@ class BlobsMongoDbPersistence extends pip_services_mongodb_node_1.MongoDbPersist
         let criteria = this.composeFilter(filter);
         // Adjust max item count based on configuration
         let options = {};
-        paging = paging || new pip_services_commons_node_8.PagingParams();
+        paging = paging || new pip_services3_commons_node_8.PagingParams();
         let skip = paging.getSkip(-1);
         if (skip >= 0)
             options.skip = skip;
@@ -119,12 +119,12 @@ class BlobsMongoDbPersistence extends pip_services_mongodb_node_1.MongoDbPersist
                         callback(err, null);
                         return;
                     }
-                    let page = new pip_services_commons_node_9.DataPage(items, count);
+                    let page = new pip_services3_commons_node_9.DataPage(items, count);
                     callback(null, page);
                 });
             }
             else {
-                let page = new pip_services_commons_node_9.DataPage(items);
+                let page = new pip_services3_commons_node_9.DataPage(items);
                 callback(null, page);
             }
         });
@@ -210,11 +210,11 @@ class BlobsMongoDbPersistence extends pip_services_mongodb_node_1.MongoDbPersist
         callback(null, null);
     }
     infoToToken(item) {
-        let data = pip_services_commons_node_1.ConfigParams.fromValue(item);
+        let data = pip_services3_commons_node_1.ConfigParams.fromValue(item);
         return data.toString();
     }
     tokenToInfo(token) {
-        let data = pip_services_commons_node_1.ConfigParams.fromString(token);
+        let data = pip_services3_commons_node_1.ConfigParams.fromString(token);
         return {
             id: data.getAsNullableString('id'),
             group: data.getAsNullableString('group'),
@@ -228,13 +228,13 @@ class BlobsMongoDbPersistence extends pip_services_mongodb_node_1.MongoDbPersist
     }
     beginWrite(correlationId, item, callback) {
         if (item.size != null && item.size > this._maxBlobSize) {
-            let err = new pip_services_commons_node_2.BadRequestException(correlationId, 'BLOB_TOO_LARGE', 'Blob ' + item.id + ' exceeds allowed maximum size of ' + this._maxBlobSize).withDetails('blob_id', item.id)
+            let err = new pip_services3_commons_node_2.BadRequestException(correlationId, 'BLOB_TOO_LARGE', 'Blob ' + item.id + ' exceeds allowed maximum size of ' + this._maxBlobSize).withDetails('blob_id', item.id)
                 .withDetails('size', item.size)
                 .withDetails('max_size', this._maxBlobSize);
             callback(err, null);
             return;
         }
-        item.id = item.id || pip_services_commons_node_4.IdGenerator.nextLong();
+        item.id = item.id || pip_services3_commons_node_4.IdGenerator.nextLong();
         let token = this.infoToToken(item);
         callback(null, token);
     }
@@ -339,15 +339,15 @@ class BlobsMongoDbPersistence extends pip_services_mongodb_node_1.MongoDbPersist
             name: metadata.name,
             size: gs.length,
             content_type: gs.contentType,
-            create_time: pip_services_commons_node_6.DateTimeConverter.toNullableDateTime(gs.uploadDate),
-            expire_time: pip_services_commons_node_6.DateTimeConverter.toNullableDateTime(metadata.expire_time),
-            completed: pip_services_commons_node_5.BooleanConverter.toBoolean(metadata.completed)
+            create_time: pip_services3_commons_node_6.DateTimeConverter.toNullableDateTime(gs.uploadDate),
+            expire_time: pip_services3_commons_node_6.DateTimeConverter.toNullableDateTime(metadata.expire_time),
+            completed: pip_services3_commons_node_5.BooleanConverter.toBoolean(metadata.completed)
         };
     }
     beginRead(correlationId, id, callback) {
         this._GridStore.exist(this._connection.db, id, this._collection, (err, exist) => {
             if (err == null && exist == false) {
-                err = new pip_services_commons_node_3.NotFoundException(correlationId, 'BLOB_NOT_FOUND', 'Blob ' + id + ' was not found')
+                err = new pip_services3_commons_node_3.NotFoundException(correlationId, 'BLOB_NOT_FOUND', 'Blob ' + id + ' was not found')
                     .withDetails('blob_id', id);
             }
             if (err) {

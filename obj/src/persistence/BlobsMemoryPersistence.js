@@ -2,12 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 let _ = require('lodash');
 let async = require('async');
-const pip_services_commons_node_1 = require("pip-services-commons-node");
-const pip_services_commons_node_2 = require("pip-services-commons-node");
-const pip_services_commons_node_3 = require("pip-services-commons-node");
-const pip_services_commons_node_4 = require("pip-services-commons-node");
-const pip_services_data_node_1 = require("pip-services-data-node");
-class BlobsMemoryPersistence extends pip_services_data_node_1.IdentifiableMemoryPersistence {
+const pip_services3_commons_node_1 = require("pip-services3-commons-node");
+const pip_services3_commons_node_2 = require("pip-services3-commons-node");
+const pip_services3_commons_node_3 = require("pip-services3-commons-node");
+const pip_services3_commons_node_4 = require("pip-services3-commons-node");
+const pip_services3_data_node_1 = require("pip-services3-data-node");
+class BlobsMemoryPersistence extends pip_services3_data_node_1.IdentifiableMemoryPersistence {
     constructor() {
         super();
         this._content = {};
@@ -33,7 +33,7 @@ class BlobsMemoryPersistence extends pip_services_data_node_1.IdentifiableMemory
         return false;
     }
     composeFilter(filter) {
-        filter = filter || new pip_services_commons_node_1.FilterParams();
+        filter = filter || new pip_services3_commons_node_1.FilterParams();
         let search = filter.getAsNullableString('search');
         let id = filter.getAsNullableString('id');
         let name = filter.getAsNullableString('name');
@@ -70,7 +70,7 @@ class BlobsMemoryPersistence extends pip_services_data_node_1.IdentifiableMemory
     }
     markCompleted(correlationId, ids, callback) {
         async.each(ids, (id, callback) => {
-            let data = pip_services_commons_node_2.AnyValueMap.fromTuples('completed', true);
+            let data = pip_services3_commons_node_2.AnyValueMap.fromTuples('completed', true);
             super.updatePartially(correlationId, id, data, callback);
         }, callback);
     }
@@ -96,7 +96,7 @@ class BlobsMemoryPersistence extends pip_services_data_node_1.IdentifiableMemory
     }
     beginWrite(correlationId, item, callback) {
         if (item.size != null && item.size > this._maxBlobSize) {
-            let err = new pip_services_commons_node_4.BadRequestException(correlationId, 'BLOB_TOO_LARGE', 'Blob ' + item.id + ' exceeds allowed maximum size of ' + this._maxBlobSize).withDetails('blob_id', item.id)
+            let err = new pip_services3_commons_node_4.BadRequestException(correlationId, 'BLOB_TOO_LARGE', 'Blob ' + item.id + ' exceeds allowed maximum size of ' + this._maxBlobSize).withDetails('blob_id', item.id)
                 .withDetails('size', item.size)
                 .withDetails('max_size', this._maxBlobSize);
             callback(err, null);
@@ -112,14 +112,14 @@ class BlobsMemoryPersistence extends pip_services_data_node_1.IdentifiableMemory
         let id = token;
         let oldBuffer = this._content[id];
         if (oldBuffer == null) {
-            let err = new pip_services_commons_node_3.NotFoundException(correlationId, 'BLOB_NOT_FOUND', 'Blob ' + id + ' was not found').withDetails('blob_id', id);
+            let err = new pip_services3_commons_node_3.NotFoundException(correlationId, 'BLOB_NOT_FOUND', 'Blob ' + id + ' was not found').withDetails('blob_id', id);
             callback(err, null);
             return;
         }
         // Enforce maximum size
         let chunkLength = chunk ? chunk.length : 0;
         if (this._maxBlobSize > 0 && oldBuffer.length + chunkLength > this._maxBlobSize) {
-            let err = new pip_services_commons_node_4.BadRequestException(correlationId, 'BLOB_TOO_LARGE', 'Blob ' + id + ' exceeds allowed maximum size of ' + this._maxBlobSize).withDetails('blob_id', id)
+            let err = new pip_services3_commons_node_4.BadRequestException(correlationId, 'BLOB_TOO_LARGE', 'Blob ' + id + ' exceeds allowed maximum size of ' + this._maxBlobSize).withDetails('blob_id', id)
                 .withDetails('size', oldBuffer.length + chunkLength)
                 .withDetails('max_size', this._maxBlobSize);
             callback(err, null);
@@ -143,7 +143,7 @@ class BlobsMemoryPersistence extends pip_services_data_node_1.IdentifiableMemory
             (callback) => {
                 super.getOneById(correlationId, id, (err, data) => {
                     if (err == null && data == null) {
-                        err = new pip_services_commons_node_3.NotFoundException(correlationId, 'BLOB_NOT_FOUND', 'Blob ' + id + ' was not found').withDetails('blob_id', id);
+                        err = new pip_services3_commons_node_3.NotFoundException(correlationId, 'BLOB_NOT_FOUND', 'Blob ' + id + ' was not found').withDetails('blob_id', id);
                     }
                     item = data;
                     callback(err);
@@ -170,7 +170,7 @@ class BlobsMemoryPersistence extends pip_services_data_node_1.IdentifiableMemory
     beginRead(correlationId, id, callback) {
         let oldBuffer = this._content[id];
         if (oldBuffer == null) {
-            let err = new pip_services_commons_node_3.NotFoundException(correlationId, 'BLOB_NOT_FOUND', 'Blob ' + id + ' was not found').withDetails('blob_id', id);
+            let err = new pip_services3_commons_node_3.NotFoundException(correlationId, 'BLOB_NOT_FOUND', 'Blob ' + id + ' was not found').withDetails('blob_id', id);
             callback(err, null);
             return;
         }
@@ -179,7 +179,7 @@ class BlobsMemoryPersistence extends pip_services_data_node_1.IdentifiableMemory
     readChunk(correlationId, id, skip, take, callback) {
         let oldBuffer = this._content[id];
         if (oldBuffer == null) {
-            let err = new pip_services_commons_node_3.NotFoundException(correlationId, 'BLOB_NOT_FOUND', 'Blob ' + id + ' was not found').withDetails('blob_id', id);
+            let err = new pip_services3_commons_node_3.NotFoundException(correlationId, 'BLOB_NOT_FOUND', 'Blob ' + id + ' was not found').withDetails('blob_id', id);
             callback(err, null);
             return;
         }

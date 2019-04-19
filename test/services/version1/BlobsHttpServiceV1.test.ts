@@ -3,10 +3,10 @@ let async = require('async');
 let restify = require('restify');
 let assert = require('chai').assert;
 
-import { ConfigParams } from 'pip-services-commons-node';
-import { Descriptor } from 'pip-services-commons-node';
-import { References } from 'pip-services-commons-node';
-import { IdGenerator } from 'pip-services-commons-node';
+import { ConfigParams } from 'pip-services3-commons-node';
+import { Descriptor } from 'pip-services3-commons-node';
+import { References } from 'pip-services3-commons-node';
+import { IdGenerator } from 'pip-services3-commons-node';
 
 import { BlobInfoV1 } from '../../../src/data/version1/BlobInfoV1';
 import { BlobsMemoryPersistence } from '../../../src/persistence/BlobsMemoryPersistence';

@@ -4,19 +4,19 @@ let _ = require('lodash');
 let async = require('async');
 let fs = require('fs');
 let querystring = require('querystring');
-const pip_services_commons_node_1 = require("pip-services-commons-node");
-const pip_services_components_node_1 = require("pip-services-components-node");
-const pip_services_components_node_2 = require("pip-services-components-node");
-const pip_services_commons_node_2 = require("pip-services-commons-node");
-const pip_services_commons_node_3 = require("pip-services-commons-node");
-const pip_services_commons_node_4 = require("pip-services-commons-node");
-const pip_services_commons_node_5 = require("pip-services-commons-node");
-const pip_services_commons_node_6 = require("pip-services-commons-node");
-const pip_services_commons_node_7 = require("pip-services-commons-node");
-const pip_services_commons_node_8 = require("pip-services-commons-node");
-const pip_services_commons_node_9 = require("pip-services-commons-node");
-const pip_services_commons_node_10 = require("pip-services-commons-node");
-const pip_services_aws_node_1 = require("pip-services-aws-node");
+const pip_services3_commons_node_1 = require("pip-services3-commons-node");
+const pip_services3_components_node_1 = require("pip-services3-components-node");
+const pip_services3_components_node_2 = require("pip-services3-components-node");
+const pip_services3_commons_node_2 = require("pip-services3-commons-node");
+const pip_services3_commons_node_3 = require("pip-services3-commons-node");
+const pip_services3_commons_node_4 = require("pip-services3-commons-node");
+const pip_services3_commons_node_5 = require("pip-services3-commons-node");
+const pip_services3_commons_node_6 = require("pip-services3-commons-node");
+const pip_services3_commons_node_7 = require("pip-services3-commons-node");
+const pip_services3_commons_node_8 = require("pip-services3-commons-node");
+const pip_services3_commons_node_9 = require("pip-services3-commons-node");
+const pip_services3_commons_node_10 = require("pip-services3-commons-node");
+const pip_services3_aws_node_1 = require("pip-services3-aws-node");
 const TempBlobStorage_1 = require("./TempBlobStorage");
 class BlobsS3Persistence {
     constructor() {
@@ -26,10 +26,10 @@ class BlobsS3Persistence {
         this._maxBlobSize = 100 * 1024;
         this._reducedRedundancy = true;
         this._maxPageSize = 100;
-        this._dependencyResolver = new pip_services_commons_node_4.DependencyResolver(BlobsS3Persistence._defaultConfig);
-        this._connectionResolver = new pip_services_aws_node_1.AwsConnectionResolver();
-        this._logger = new pip_services_components_node_1.CompositeLogger();
-        this._counters = new pip_services_components_node_2.CompositeCounters();
+        this._dependencyResolver = new pip_services3_commons_node_4.DependencyResolver(BlobsS3Persistence._defaultConfig);
+        this._connectionResolver = new pip_services3_aws_node_1.AwsConnectionResolver();
+        this._logger = new pip_services3_components_node_1.CompositeLogger();
+        this._counters = new pip_services3_components_node_2.CompositeCounters();
         this._storage = new TempBlobStorage_1.TempBlobStorage('./data/temp');
     }
     configure(config) {
@@ -106,7 +106,7 @@ class BlobsS3Persistence {
             content_type: data.ContentType,
             create_time: data.LastModified,
             expire_time: data.Expires,
-            completed: pip_services_commons_node_6.BooleanConverter.toBoolean(metadata.completed)
+            completed: pip_services3_commons_node_6.BooleanConverter.toBoolean(metadata.completed)
         };
     }
     encodeString(value) {
@@ -135,7 +135,7 @@ class BlobsS3Persistence {
         return false;
     }
     composeFilter(filter) {
-        filter = filter || new pip_services_commons_node_8.FilterParams();
+        filter = filter || new pip_services3_commons_node_8.FilterParams();
         let search = this.encodeString(filter.getAsNullableString('search'));
         let id = filter.getAsNullableString('id');
         let name = this.encodeString(filter.getAsNullableString('name'));
@@ -169,7 +169,7 @@ class BlobsS3Persistence {
     }
     getPageByFilter(correlationId, filter, paging, callback) {
         let filterCurl = this.composeFilter(filter);
-        paging = paging || new pip_services_commons_node_9.PagingParams();
+        paging = paging || new pip_services3_commons_node_9.PagingParams();
         let skip = paging.getSkip(0);
         let take = paging.getTake(this._maxPageSize);
         let result = [];
@@ -226,7 +226,7 @@ class BlobsS3Persistence {
                 });
             });
         }, (err) => {
-            let page = err == null ? new pip_services_commons_node_10.DataPage(result, null) : null;
+            let page = err == null ? new pip_services3_commons_node_10.DataPage(result, null) : null;
             callback(err, page);
         });
     }
@@ -270,11 +270,11 @@ class BlobsS3Persistence {
             ContentDisposition: 'inline; filename=' + filename,
             ContentType: item.content_type,
             StorageClass: this._reducedRedundancy ? 'REDUCED_REDUNDANCY' : 'STANDARD',
-            Expires: pip_services_commons_node_7.DateTimeConverter.toNullableDateTime(item.expire_time),
+            Expires: pip_services3_commons_node_7.DateTimeConverter.toNullableDateTime(item.expire_time),
             Metadata: {
                 name: item.name,
                 group: item.group,
-                completed: pip_services_commons_node_5.StringConverter.toString(item.completed)
+                completed: pip_services3_commons_node_5.StringConverter.toString(item.completed)
             }
         };
         this._s3.copyObject(params, (err, data) => {
@@ -316,11 +316,11 @@ class BlobsS3Persistence {
             ContentDisposition: 'inline; filename=' + filename,
             ContentType: item.content_type,
             StorageClass: this._reducedRedundancy ? 'REDUCED_REDUNDANCY' : 'STANDARD',
-            Expires: pip_services_commons_node_7.DateTimeConverter.toNullableDateTime(item.expire_time),
+            Expires: pip_services3_commons_node_7.DateTimeConverter.toNullableDateTime(item.expire_time),
             Metadata: {
                 name: item.name,
                 group: item.group,
-                completed: pip_services_commons_node_5.StringConverter.toString(item.completed)
+                completed: pip_services3_commons_node_5.StringConverter.toString(item.completed)
             }
         };
         this._s3.createMultipartUpload(params, (err, data) => {
@@ -335,7 +335,7 @@ class BlobsS3Persistence {
     uploadPart(correlationId, token, body, callback) {
         let tokens = (token || '').split(';');
         if (tokens.length == 0) {
-            let err = new pip_services_commons_node_3.BadRequestException(correlationId, 'BAD_TOKEN', 'Token ' + token + ' is invalid')
+            let err = new pip_services3_commons_node_3.BadRequestException(correlationId, 'BAD_TOKEN', 'Token ' + token + ' is invalid')
                 .withDetails('token', token);
             callback(err, null);
             return;
@@ -356,7 +356,7 @@ class BlobsS3Persistence {
     uploadAndDeleteChunks(correlationId, token, callback) {
         let tokens = (token || '').split(';');
         if (tokens.length == 0) {
-            let err = new pip_services_commons_node_3.BadRequestException(correlationId, 'BAD_TOKEN', 'Token ' + token + ' is invalid')
+            let err = new pip_services3_commons_node_3.BadRequestException(correlationId, 'BAD_TOKEN', 'Token ' + token + ' is invalid')
                 .withDetails('token', token);
             callback(err, null);
             return;
@@ -374,7 +374,7 @@ class BlobsS3Persistence {
     writeChunk(correlationId, token, chunk, callback) {
         let tokens = (token || '').split(';');
         if (tokens.length == 0) {
-            let err = new pip_services_commons_node_3.BadRequestException(correlationId, 'BAD_TOKEN', 'Token ' + token + ' is invalid')
+            let err = new pip_services3_commons_node_3.BadRequestException(correlationId, 'BAD_TOKEN', 'Token ' + token + ' is invalid')
                 .withDetails('token', token);
             callback(err, null);
             return;
@@ -391,7 +391,7 @@ class BlobsS3Persistence {
     endWrite(correlationId, token, chunk, callback) {
         let tokens = (token || '').split(';');
         if (tokens.length == 0) {
-            let err = new pip_services_commons_node_3.BadRequestException(correlationId, 'BAD_TOKEN', 'Token ' + token + ' is invalid')
+            let err = new pip_services3_commons_node_3.BadRequestException(correlationId, 'BAD_TOKEN', 'Token ' + token + ' is invalid')
                 .withDetails('token', token);
             callback(err, null);
             return;
@@ -460,7 +460,7 @@ class BlobsS3Persistence {
     abortWrite(correlationId, token, callback) {
         let tokens = (token || '').split(';');
         if (tokens.length == 0) {
-            let err = new pip_services_commons_node_3.BadRequestException(correlationId, 'BAD_TOKEN', 'Token ' + token + ' is invalid')
+            let err = new pip_services3_commons_node_3.BadRequestException(correlationId, 'BAD_TOKEN', 'Token ' + token + ' is invalid')
                 .withDetails('token', token);
             callback(err);
             return;
@@ -487,7 +487,7 @@ class BlobsS3Persistence {
     beginRead(correlationId, id, callback) {
         this.getOneById(correlationId, id, (err, item) => {
             if (err == null && item == null) {
-                err = new pip_services_commons_node_2.NotFoundException(correlationId, 'BLOB_NOT_FOUND', 'Blob ' + id + ' was not found').withDetails('blob_id', id);
+                err = new pip_services3_commons_node_2.NotFoundException(correlationId, 'BLOB_NOT_FOUND', 'Blob ' + id + ' was not found').withDetails('blob_id', id);
             }
             callback(err, item);
         });
@@ -553,6 +553,6 @@ class BlobsS3Persistence {
         });
     }
 }
-BlobsS3Persistence._defaultConfig = pip_services_commons_node_1.ConfigParams.fromTuples("connection.protocol", "aws", "connection.region", null, "connection.account_id", null, "connection.bucket", null, "connection.arn", null, "credential.access_id", null, "credential.access_key", null, "options.reduced_redundancy", true, "options.max_blob_size", 10 * 1024, "options.connect_timeout", 30000);
+BlobsS3Persistence._defaultConfig = pip_services3_commons_node_1.ConfigParams.fromTuples("connection.protocol", "aws", "connection.region", null, "connection.account_id", null, "connection.bucket", null, "connection.arn", null, "credential.access_id", null, "credential.access_key", null, "options.reduced_redundancy", true, "options.max_blob_size", 10 * 1024, "options.connect_timeout", 30000);
 exports.BlobsS3Persistence = BlobsS3Persistence;
 //# sourceMappingURL=BlobsS3Persistence.js.map

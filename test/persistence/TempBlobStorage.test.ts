@@ -1,8 +1,8 @@
 let async = require('async');
 let assert = require('chai').assert;
 
-import { ConfigParams } from 'pip-services-commons-node';
-import { IdGenerator } from 'pip-services-commons-node';
+import { ConfigParams } from 'pip-services3-commons-node';
+import { IdGenerator } from 'pip-services3-commons-node';
 
 import { TempBlobStorage } from '../../src/persistence/TempBlobStorage';
 

@@ -1,6 +1,6 @@
 let process = require('process');
 
-import { ConfigParams } from 'pip-services-commons-node';
+import { ConfigParams } from 'pip-services3-commons-node';
 
 import { BlobsS3Persistence } from '../../src/persistence/BlobsS3Persistence';
 import { BlobsPersistenceFixture } from './BlobsPersistenceFixture';

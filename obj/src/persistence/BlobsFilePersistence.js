@@ -3,9 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 let _ = require('lodash');
 let async = require('async');
 let fs = require('fs');
-const pip_services_commons_node_1 = require("pip-services-commons-node");
-const pip_services_data_node_1 = require("pip-services-data-node");
-const pip_services_commons_node_2 = require("pip-services-commons-node");
+const pip_services3_commons_node_1 = require("pip-services3-commons-node");
+const pip_services3_data_node_1 = require("pip-services3-data-node");
+const pip_services3_commons_node_2 = require("pip-services3-commons-node");
 const BlobsMemoryPersistence_1 = require("./BlobsMemoryPersistence");
 const TempBlobStorage_1 = require("./TempBlobStorage");
 class BlobsFilePersistence extends BlobsMemoryPersistence_1.BlobsMemoryPersistence {
@@ -17,12 +17,12 @@ class BlobsFilePersistence extends BlobsMemoryPersistence_1.BlobsMemoryPersisten
         this._path = path || this._path;
         this._index = index || this._path + '/index.json';
         this._storage = new TempBlobStorage_1.TempBlobStorage(this._path);
-        this._persister = new pip_services_data_node_1.JsonFilePersister(this._index);
+        this._persister = new pip_services3_data_node_1.JsonFilePersister(this._index);
         this._loader = this._persister;
         this._saver = this._persister;
     }
     configure(config) {
-        config = new pip_services_commons_node_1.ConfigParams(config);
+        config = new pip_services3_commons_node_1.ConfigParams(config);
         this._storage.configure(config);
         this._path = config.getAsStringWithDefault('path', this._path);
         this._index = config.getAsStringWithDefault('index', this._path + '/index.json');
@@ -91,7 +91,7 @@ class BlobsFilePersistence extends BlobsMemoryPersistence_1.BlobsMemoryPersisten
             (callback) => {
                 super.getOneById(correlationId, id, (err, data) => {
                     if (err == null && data == null) {
-                        err = new pip_services_commons_node_2.NotFoundException(correlationId, 'BLOB_NOT_FOUND', 'Blob ' + id + ' was not found').withDetails('blob_id', id);
+                        err = new pip_services3_commons_node_2.NotFoundException(correlationId, 'BLOB_NOT_FOUND', 'Blob ' + id + ' was not found').withDetails('blob_id', id);
                     }
                     item = data;
                     callback(err);
@@ -157,7 +157,7 @@ class BlobsFilePersistence extends BlobsMemoryPersistence_1.BlobsMemoryPersisten
     beginRead(correlationId, id, callback) {
         let filePath = this.makeFileName(id);
         if (!fs.existsSync(filePath)) {
-            let err = new pip_services_commons_node_2.NotFoundException(correlationId, 'BLOB_NOT_FOUND', 'Blob ' + id + ' was not found').withDetails('blob_id', id)
+            let err = new pip_services3_commons_node_2.NotFoundException(correlationId, 'BLOB_NOT_FOUND', 'Blob ' + id + ' was not found').withDetails('blob_id', id)
                 .withDetails('path', filePath);
             callback(err, null);
             return;

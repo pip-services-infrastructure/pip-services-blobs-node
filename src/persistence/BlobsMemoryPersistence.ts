@@ -1,15 +1,15 @@
 let _ = require('lodash');
 let async = require('async');
 
-import { ConfigParams } from 'pip-services-commons-node';
-import { FilterParams } from 'pip-services-commons-node';
-import { PagingParams } from 'pip-services-commons-node';
-import { DataPage } from 'pip-services-commons-node';
-import { AnyValueMap } from 'pip-services-commons-node';
-import { NotFoundException } from 'pip-services-commons-node';
-import { BadRequestException } from 'pip-services-commons-node';
-import { IdGenerator } from 'pip-services-commons-node';
-import { IdentifiableMemoryPersistence } from 'pip-services-data-node';
+import { ConfigParams } from 'pip-services3-commons-node';
+import { FilterParams } from 'pip-services3-commons-node';
+import { PagingParams } from 'pip-services3-commons-node';
+import { DataPage } from 'pip-services3-commons-node';
+import { AnyValueMap } from 'pip-services3-commons-node';
+import { NotFoundException } from 'pip-services3-commons-node';
+import { BadRequestException } from 'pip-services3-commons-node';
+import { IdGenerator } from 'pip-services3-commons-node';
+import { IdentifiableMemoryPersistence } from 'pip-services3-data-node';
 
 import { BlobInfoV1 } from '../data/version1/BlobInfoV1';
 import { IBlobsPersistence } from './IBlobsPersistence';

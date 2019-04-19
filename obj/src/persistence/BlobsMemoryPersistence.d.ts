@@ -1,9 +1,8 @@
-/// <reference types="node" />
-import { ConfigParams } from 'pip-services-commons-node';
-import { FilterParams } from 'pip-services-commons-node';
-import { PagingParams } from 'pip-services-commons-node';
-import { DataPage } from 'pip-services-commons-node';
-import { IdentifiableMemoryPersistence } from 'pip-services-data-node';
+import { ConfigParams } from 'pip-services3-commons-node';
+import { FilterParams } from 'pip-services3-commons-node';
+import { PagingParams } from 'pip-services3-commons-node';
+import { DataPage } from 'pip-services3-commons-node';
+import { IdentifiableMemoryPersistence } from 'pip-services3-data-node';
 import { BlobInfoV1 } from '../data/version1/BlobInfoV1';
 import { IBlobsPersistence } from './IBlobsPersistence';
 export declare class BlobsMemoryPersistence extends IdentifiableMemoryPersistence<BlobInfoV1, string> implements IBlobsPersistence {
@@ -13,9 +12,9 @@ export declare class BlobsMemoryPersistence extends IdentifiableMemoryPersistenc
     protected _maxBlobSize: number;
     constructor();
     configure(config: ConfigParams): void;
-    private matchString(value, search);
-    private matchSearch(item, search);
-    private composeFilter(filter);
+    private matchString;
+    private matchSearch;
+    private composeFilter;
     getPageByFilter(correlationId: string, filter: FilterParams, paging: PagingParams, callback: (err: any, page: DataPage<BlobInfoV1>) => void): void;
     markCompleted(correlationId: string, ids: string[], callback: (err: any) => void): void;
     deleteById(correlationId: string, id: string, callback?: (err: any, item: BlobInfoV1) => void): void;

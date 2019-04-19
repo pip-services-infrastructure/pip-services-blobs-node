@@ -1,4 +1,4 @@
-import { ConfigParams } from 'pip-services-commons-node';
+import { ConfigParams } from 'pip-services3-commons-node';
 
 import { BlobsFilePersistence } from '../../src/persistence/BlobsFilePersistence';
 import { BlobsPersistenceFixture } from './BlobsPersistenceFixture';
