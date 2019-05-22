@@ -21,7 +21,7 @@ export declare class BlobsController implements IConfigurable, IReferenceable, I
     getBlobsByIds(correlationId: string, blobIds: string[], callback: (err: any, blobs: BlobInfoV1[]) => void): void;
     getBlobById(correlationId: string, blobId: string, callback: (err: any, blob: BlobInfoV1) => void): void;
     getBlobUriById(correlationId: string, blobId: string, callback: (err: any, uri: string) => void): void;
-    private normalizeName;
+    private normalizeName(name);
     beginBlobWrite(correlationId: string, blob: BlobInfoV1, callback: (err: any, token: string) => void): void;
     writeBlobChunk(correlationId: string, token: string, chunk: string, callback: (err: any, token: string) => void): void;
     endBlobWrite(correlationId: string, token: string, chunk: string, callback?: (err: any, blob: BlobInfoV1) => void): void;
