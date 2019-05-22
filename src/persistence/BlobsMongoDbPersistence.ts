@@ -8,7 +8,7 @@ import { ICleanable } from 'pip-services3-commons-node';
 import { BadRequestException } from 'pip-services3-commons-node';
 import { NotFoundException } from 'pip-services3-commons-node';
 import { IOpenable } from 'pip-services3-commons-node';
-import { MongoDbPersistence } from 'pip-services3-mongodb-node';
+import { MongoosePersistence } from 'pip-services3-mongoose-node';
 import { IdGenerator } from 'pip-services3-commons-node';
 import { BooleanConverter } from 'pip-services3-commons-node';
 import { DateTimeConverter } from 'pip-services3-commons-node';
@@ -20,7 +20,7 @@ import { BlobInfoV1 } from '../data/version1/BlobInfoV1';
 import { IBlobsPersistence } from './IBlobsPersistence';
 import { TempBlobStorage } from './TempBlobStorage';
 
-export class BlobsMongoDbPersistence  extends MongoDbPersistence implements IBlobsPersistence {
+export class BlobsMongoDbPersistence  extends MongoosePersistence implements IBlobsPersistence {
     protected _GridStore: any;
     protected _storage: TempBlobStorage = new TempBlobStorage('./data/temp');
     protected _maxBlobSize: number = 100 * 1024;

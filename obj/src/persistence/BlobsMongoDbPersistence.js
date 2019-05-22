@@ -6,7 +6,7 @@ let stream = require('stream');
 const pip_services3_commons_node_1 = require("pip-services3-commons-node");
 const pip_services3_commons_node_2 = require("pip-services3-commons-node");
 const pip_services3_commons_node_3 = require("pip-services3-commons-node");
-const pip_services3_mongodb_node_1 = require("pip-services3-mongodb-node");
+const pip_services3_mongoose_node_1 = require("pip-services3-mongoose-node");
 const pip_services3_commons_node_4 = require("pip-services3-commons-node");
 const pip_services3_commons_node_5 = require("pip-services3-commons-node");
 const pip_services3_commons_node_6 = require("pip-services3-commons-node");
@@ -14,7 +14,7 @@ const pip_services3_commons_node_7 = require("pip-services3-commons-node");
 const pip_services3_commons_node_8 = require("pip-services3-commons-node");
 const pip_services3_commons_node_9 = require("pip-services3-commons-node");
 const TempBlobStorage_1 = require("./TempBlobStorage");
-class BlobsMongoDbPersistence extends pip_services3_mongodb_node_1.MongoDbPersistence {
+class BlobsMongoDbPersistence extends pip_services3_mongoose_node_1.MongoosePersistence {
     constructor() {
         super('blobs', null);
         this._storage = new TempBlobStorage_1.TempBlobStorage('./data/temp');
