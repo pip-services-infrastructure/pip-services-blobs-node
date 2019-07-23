@@ -7,6 +7,8 @@ const BlobsFilePersistence_1 = require("../persistence/BlobsFilePersistence");
 const BlobsMemoryPersistence_1 = require("../persistence/BlobsMemoryPersistence");
 const BlobsController_1 = require("../logic/BlobsController");
 const BlobsHttpServiceV1_1 = require("../services/version1/BlobsHttpServiceV1");
+const BlobsCommandableGrpcServiceV1_1 = require("../services/version1/BlobsCommandableGrpcServiceV1");
+const BlobsGrpcServiceV1_1 = require("../services/version1/BlobsGrpcServiceV1");
 class BlobsServiceFactory extends pip_services3_components_node_1.Factory {
     constructor() {
         super();
@@ -16,6 +18,8 @@ class BlobsServiceFactory extends pip_services3_components_node_1.Factory {
         this.registerAsType(BlobsServiceFactory.S3PersistenceDescriptor, BlobsMongoDbPersistence_1.BlobsMongoDbPersistence);
         this.registerAsType(BlobsServiceFactory.ControllerDescriptor, BlobsController_1.BlobsController);
         this.registerAsType(BlobsServiceFactory.HttpServiceDescriptor, BlobsHttpServiceV1_1.BlobsHttpServiceV1);
+        this.registerAsType(BlobsServiceFactory.CommandableGrpcServiceDescriptor, BlobsCommandableGrpcServiceV1_1.BlobsCommandableGrpcServiceV1);
+        this.registerAsType(BlobsServiceFactory.GrpcServiceDescriptor, BlobsGrpcServiceV1_1.BlobsGrpcServiceV1);
     }
 }
 BlobsServiceFactory.Descriptor = new pip_services3_commons_node_1.Descriptor("pip-services-blobs", "factory", "default", "default", "1.0");
@@ -25,5 +29,7 @@ BlobsServiceFactory.MongoDbPersistenceDescriptor = new pip_services3_commons_nod
 BlobsServiceFactory.S3PersistenceDescriptor = new pip_services3_commons_node_1.Descriptor("pip-services-blobs", "persistence", "s3", "*", "1.0");
 BlobsServiceFactory.ControllerDescriptor = new pip_services3_commons_node_1.Descriptor("pip-services-blobs", "controller", "default", "*", "1.0");
 BlobsServiceFactory.HttpServiceDescriptor = new pip_services3_commons_node_1.Descriptor("pip-services-blobs", "service", "http", "*", "1.0");
+BlobsServiceFactory.CommandableGrpcServiceDescriptor = new pip_services3_commons_node_1.Descriptor("pip-services-blobs", "service", "commandable-grpc", "*", "1.0");
+BlobsServiceFactory.GrpcServiceDescriptor = new pip_services3_commons_node_1.Descriptor("pip-services-blobs", "service", "grpc", "*", "1.0");
 exports.BlobsServiceFactory = BlobsServiceFactory;
 //# sourceMappingURL=BlobsServiceFactory.js.map

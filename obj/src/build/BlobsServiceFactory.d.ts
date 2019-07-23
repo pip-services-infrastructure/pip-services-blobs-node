@@ -8,5 +8,7 @@ export declare class BlobsServiceFactory extends Factory {
     static S3PersistenceDescriptor: Descriptor;
     static ControllerDescriptor: Descriptor;
     static HttpServiceDescriptor: Descriptor;
+    static CommandableGrpcServiceDescriptor: Descriptor;
+    static GrpcServiceDescriptor: Descriptor;
     constructor();
 }

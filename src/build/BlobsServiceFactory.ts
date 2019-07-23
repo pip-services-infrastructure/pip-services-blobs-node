@@ -8,6 +8,8 @@ import { BlobsS3Persistence } from '../persistence/BlobsS3Persistence';
 
 import { BlobsController } from '../logic/BlobsController';
 import { BlobsHttpServiceV1 } from '../services/version1/BlobsHttpServiceV1';
+import { BlobsCommandableGrpcServiceV1 } from '../services/version1/BlobsCommandableGrpcServiceV1';
+import { BlobsGrpcServiceV1 } from '../services/version1/BlobsGrpcServiceV1';
 
 export class BlobsServiceFactory extends Factory {
 	public static Descriptor = new Descriptor("pip-services-blobs", "factory", "default", "default", "1.0");
@@ -19,6 +21,8 @@ export class BlobsServiceFactory extends Factory {
 
 	public static ControllerDescriptor = new Descriptor("pip-services-blobs", "controller", "default", "*", "1.0");
 	public static HttpServiceDescriptor = new Descriptor("pip-services-blobs", "service", "http", "*", "1.0");
+	public static CommandableGrpcServiceDescriptor = new Descriptor("pip-services-blobs", "service", "commandable-grpc", "*", "1.0");
+	public static GrpcServiceDescriptor = new Descriptor("pip-services-blobs", "service", "grpc", "*", "1.0");
 	
 	constructor() {
 		super();
@@ -29,6 +33,8 @@ export class BlobsServiceFactory extends Factory {
 
 		this.registerAsType(BlobsServiceFactory.ControllerDescriptor, BlobsController);
 		this.registerAsType(BlobsServiceFactory.HttpServiceDescriptor, BlobsHttpServiceV1);
+		this.registerAsType(BlobsServiceFactory.CommandableGrpcServiceDescriptor, BlobsCommandableGrpcServiceV1);
+		this.registerAsType(BlobsServiceFactory.GrpcServiceDescriptor, BlobsGrpcServiceV1);
 	}
 	
 }

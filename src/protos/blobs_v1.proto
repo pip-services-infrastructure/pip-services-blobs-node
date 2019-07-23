@@ -1,0 +1,168 @@
+// Copyright 2015 gRPC authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "pip-services.infrastructure.blobs.version1";
+option java_outer_classname = "BlobsProtoV1";
+option objc_class_prefix = "BLOBS_CMD_V1";
+
+package blobs_v1;
+
+message ErrorDescription {
+  string type = 1;
+  string category = 2;
+  string code = 3;
+  string correlation_id = 4;
+  string status = 5;
+  string message = 6;
+  string cause = 7;
+  string stack_trace = 8;
+  map<string, string> details = 9;
+}
+
+message PagingParams {
+    int64 skip = 1;
+    int32 take = 2;
+    bool total = 3;
+}
+
+message BlobInfo {
+    // Identification
+    string id = 1;
+    string group = 2;
+    string name = 3;
+
+    // Content
+    int64 size = 4;
+    string content_type = 5;
+    string create_time = 6;
+    string expire_time = 7;
+    bool completed = 8;
+}
+
+message BlobInfoPage {
+    int64 total = 1;
+    repeated BlobInfo data = 2;
+}
+
+// The blobs service definition.
+service Blobs {
+  rpc get_blobs_by_filter (BlobInfoPageRequest) returns (BlobInfoPageReply) {}
+  rpc get_blobs_by_ids (BlobIdsRequest) returns (BlobInfoObjectsReply) {}
+  rpc get_blob_by_id (BlobIdRequest) returns (BlobInfoObjectReply) {}
+  rpc get_blob_uri_by_id (BlobIdRequest) returns (BlobUriReply) {}
+
+  rpc begin_blob_write (BlobInfoObjectRequest) returns (BlobTokenReply) {}
+  rpc write_blob_chunk (BlobTokenWithChunkRequest) returns (BlobTokenReply) {}
+  rpc end_blob_write (BlobTokenWithChunkRequest) returns (BlobInfoObjectReply) {}
+  rpc abort_blob_write (BlobTokenRequest) returns (BlobEmptyReply) {}
+
+  rpc begin_blob_read (BlobIdRequest) returns (BlobInfoObjectReply) {}
+  rpc read_blob_chunk (BlobReadRequest) returns (BlobChunkReply) {}
+  rpc end_blob_read (BlobIdRequest) returns (BlobEmptyReply) {}
+
+  rpc update_blob_info (BlobInfoObjectRequest) returns (BlobInfoObjectReply) {}
+  rpc mark_blobs_completed (BlobIdsRequest) returns (BlobEmptyReply) {}
+  rpc delete_blob_by_id (BlobIdRequest) returns (BlobEmptyReply) {}
+  rpc delete_blobs_by_ids (BlobIdsRequest) returns (BlobEmptyReply) {}
+}
+
+// The request message containing the blob info page request.
+message BlobInfoPageRequest {
+  string correlation_id = 1;
+  map<string, string> filter = 2;
+  PagingParams paging = 3;
+}
+
+// The response message containing the blob info page response
+message BlobInfoPageReply {
+  ErrorDescription error = 1;
+  BlobInfoPage page = 2;
+}
+
+// The request message containing the blob ids request.
+message BlobIdsRequest {
+  string correlation_id = 1;
+  repeated string blob_ids = 2;
+}
+
+// The request message containing the blob id request.
+message BlobIdRequest {
+  string correlation_id = 1;
+  string blob_id = 2;
+}
+
+// The request message containing the blob info object request.
+message BlobInfoObjectRequest {
+  string correlation_id = 1;
+  BlobInfo blob = 2;
+}
+
+// The response message containing the blob info objects response
+message BlobInfoObjectsReply {
+  ErrorDescription error = 1;
+  repeated BlobInfo blobs = 2;
+}
+
+// The response message containing the blob info object response
+message BlobInfoObjectReply {
+  ErrorDescription error = 1;
+  BlobInfo blob = 2;
+}
+
+// The response message containing the blob uri response
+message BlobUriReply {
+  ErrorDescription error = 1;
+  string uri = 2;
+}
+
+// The request message containing the blob token request.
+message BlobTokenRequest {
+  string correlation_id = 1;
+  string token = 2;
+}
+
+// The request message containing the blob token with chunk request.
+message BlobTokenWithChunkRequest {
+  string correlation_id = 1;
+  string token = 2;
+  string chunk = 3;
+}
+
+// The response message containing the blob token response
+message BlobTokenReply {
+  ErrorDescription error = 1;
+  string token = 2;
+}
+
+// The response message containing the blob empty response
+message BlobEmptyReply {
+  ErrorDescription error = 1;
+}
+
+// The request message containing the blob read request.
+message BlobReadRequest {
+  string correlation_id = 1;
+  string blob_id = 2;
+  int64 skip = 3;
+  int64 take = 4;
+}
+
+// The response message containing the blob chunk response
+message BlobChunkReply {
+  ErrorDescription error = 1;
+  string chunk = 2;
+}

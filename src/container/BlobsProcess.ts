@@ -3,6 +3,7 @@ import { ProcessContainer } from 'pip-services3-container-node';
 
 import { BlobsServiceFactory } from '../build/BlobsServiceFactory';
 import { DefaultRpcFactory } from 'pip-services3-rpc-node';
+import { DefaultGrpcFactory } from 'pip-services3-grpc-node';
 
 export class BlobsProcess extends ProcessContainer {
 
@@ -10,6 +11,7 @@ export class BlobsProcess extends ProcessContainer {
         super("blobs", "Blobs microservice");
         this._factories.add(new BlobsServiceFactory);
         this._factories.add(new DefaultRpcFactory);
+        this._factories.add(new DefaultGrpcFactory);
     }
 
 }
