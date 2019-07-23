@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import { ConfigParams } from 'pip-services3-commons-node';
 import { IConfigurable } from 'pip-services3-commons-node';
 import { IOpenable } from 'pip-services3-commons-node';
