@@ -141,7 +141,7 @@ class BlobsGrpcServiceV1 extends pip_services3_grpc_node_1.GrpcService {
         let blobId = call.request.getBlobId();
         this._controller.endBlobRead(correlationId, blobId, (err) => {
             let error = BlobsGrpcConverterV1_1.BlobsGrpcConverterV1.fromError(err);
-            let response = new messages.BlobInfoObjectReply();
+            let response = new messages.BlobEmptyReply();
             response.setError(error);
             callback(err, response);
         });

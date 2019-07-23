@@ -242,7 +242,7 @@ export class BlobsGrpcServiceV1 extends GrpcService {
             (err) => {
                 let error = BlobsGrpcConverterV1.fromError(err);
 
-                let response = new messages.BlobInfoObjectReply();
+                let response = new messages.BlobEmptyReply();
                 response.setError(error);
 
                 callback(err, response);
