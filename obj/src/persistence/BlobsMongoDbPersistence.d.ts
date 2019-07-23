@@ -15,7 +15,7 @@ export declare class BlobsMongoDbPersistence extends MongoosePersistence impleme
     configure(config: ConfigParams): void;
     open(correlationId: string, callback?: (err: any) => void): void;
     close(correlationId: string, callback?: (err: any) => void): void;
-    private composeFilter;
+    private composeFilter(filter);
     getPageByFilter(correlationId: string, filter: FilterParams, paging: PagingParams, callback: (err: any, page: DataPage<BlobInfoV1>) => void): void;
     getListByIds(correlationId: string, ids: string[], callback: (err: any, items: BlobInfoV1[]) => void): void;
     getOneById(correlationId: string, id: string, callback: (err: any, item: BlobInfoV1) => void): void;
@@ -23,13 +23,13 @@ export declare class BlobsMongoDbPersistence extends MongoosePersistence impleme
     markCompleted(correlationId: string, ids: string[], callback: (err: any) => void): void;
     isUriSupported(): boolean;
     getUri(correlationId: string, id: string, callback: (err: any, uri: string) => void): void;
-    private infoToToken;
-    private tokenToInfo;
+    private infoToToken(item);
+    private tokenToInfo(token);
     beginWrite(correlationId: string, item: BlobInfoV1, callback: (err: any, token: string) => void): void;
     writeChunk(correlationId: string, token: string, chunk: string, callback: (err: any, token: string) => void): void;
     endWrite(correlationId: string, token: string, chunk: string, callback?: (err: any, item: BlobInfoV1) => void): void;
     abortWrite(correlationId: string, token: string, callback?: (err: any) => void): void;
-    private gridToInfo;
+    private gridToInfo(gs);
     beginRead(correlationId: string, id: string, callback: (err: any, item: BlobInfoV1) => void): void;
     readChunk(correlationId: string, id: string, skip: number, take: number, callback: (err: any, chunk: string) => void): void;
     endRead(correlationId: string, id: string, callback?: (err: any) => void): void;

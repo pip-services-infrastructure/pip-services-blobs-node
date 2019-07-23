@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { ConfigParams } from 'pip-services3-commons-node';
 import { FilterParams } from 'pip-services3-commons-node';
 import { PagingParams } from 'pip-services3-commons-node';
@@ -13,9 +12,9 @@ export declare class BlobsMemoryPersistence extends IdentifiableMemoryPersistenc
     protected _maxBlobSize: number;
     constructor();
     configure(config: ConfigParams): void;
-    private matchString;
-    private matchSearch;
-    private composeFilter;
+    private matchString(value, search);
+    private matchSearch(item, search);
+    private composeFilter(filter);
     getPageByFilter(correlationId: string, filter: FilterParams, paging: PagingParams, callback: (err: any, page: DataPage<BlobInfoV1>) => void): void;
     markCompleted(correlationId: string, ids: string[], callback: (err: any) => void): void;
     deleteById(correlationId: string, id: string, callback?: (err: any, item: BlobInfoV1) => void): void;
