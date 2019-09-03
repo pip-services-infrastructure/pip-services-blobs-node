@@ -78,6 +78,6 @@ class BlobsController {
         this._persistence.deleteByIds(correlationId, blobIds, callback);
     }
 }
-BlobsController._defaultConfig = pip_services3_commons_node_1.ConfigParams.fromTuples('dependencies.persistence', 'pip-services-blobs:persistence:*:*:1.0');
 exports.BlobsController = BlobsController;
+BlobsController._defaultConfig = pip_services3_commons_node_1.ConfigParams.fromTuples('dependencies.persistence', 'pip-services-blobs:persistence:*:*:1.0');
 //# sourceMappingURL=BlobsController.js.map

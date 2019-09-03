@@ -14,6 +14,8 @@ services:
       - MONGO_SERVICE_HOST=mongo
       - MONGO_SERVICE_PORT=27017
       - MONGO_DB=app
+      - HTTP_ENABLED=true
+      - GRPC_ENABLED=true
     ports:
       - "8080:8080"
 

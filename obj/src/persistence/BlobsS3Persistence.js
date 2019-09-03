@@ -553,6 +553,6 @@ class BlobsS3Persistence {
         });
     }
 }
-BlobsS3Persistence._defaultConfig = pip_services3_commons_node_1.ConfigParams.fromTuples("connection.protocol", "aws", "connection.region", null, "connection.account_id", null, "connection.bucket", null, "connection.arn", null, "credential.access_id", null, "credential.access_key", null, "options.reduced_redundancy", true, "options.max_blob_size", 10 * 1024, "options.connect_timeout", 30000);
 exports.BlobsS3Persistence = BlobsS3Persistence;
+BlobsS3Persistence._defaultConfig = pip_services3_commons_node_1.ConfigParams.fromTuples("connection.protocol", "aws", "connection.region", null, "connection.account_id", null, "connection.bucket", null, "connection.arn", null, "credential.access_id", null, "credential.access_key", null, "options.reduced_redundancy", true, "options.max_blob_size", 10 * 1024, "options.connect_timeout", 30000);
 //# sourceMappingURL=BlobsS3Persistence.js.map
