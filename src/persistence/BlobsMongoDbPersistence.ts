@@ -309,6 +309,7 @@ export class BlobsMongoDbPersistence  extends MongoosePersistence implements IBl
         callback: (err: any, token: string) => void): void {
 
         let item = this.tokenToInfo(token);
+        chunk = chunk || "";
         let buffer = Buffer.from(chunk, 'base64');
         this._storage.appendChunk(correlationId, item.id, buffer, (err, chunks) => {
             callback(err, token);
@@ -318,6 +319,7 @@ export class BlobsMongoDbPersistence  extends MongoosePersistence implements IBl
     public endWrite(correlationId: string, token: string, chunk: string,
         callback?: (err: any, item: BlobInfoV1) => void): void {
 
+        chunk = chunk || "";
         let buffer = Buffer.from(chunk, 'base64');
         let item = this.tokenToInfo(token);
         let id = item.id;

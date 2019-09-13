@@ -98,6 +98,7 @@ export class BlobsFilePersistence extends BlobsMemoryPersistence {
     public writeChunk(correlationId: string, token: string, chunk: string,
         callback: (err: any, token: string) => void): void {
         let id = token;
+        chunk = chunk || "";
         let buffer = Buffer.from(chunk, 'base64');
         this._storage.appendChunk(correlationId, id, buffer, (err, chunks) => {
             callback(err, token);
@@ -107,6 +108,7 @@ export class BlobsFilePersistence extends BlobsMemoryPersistence {
     public endWrite(correlationId: string, token: string, chunk: string,
         callback?: (err: any, item: BlobInfoV1) => void): void {
         let id = token;
+        chunk = chunk || "";
         let buffer = Buffer.from(chunk, 'base64');
         let size = buffer.length;
         let append = false;

@@ -240,12 +240,14 @@ class BlobsMongoDbPersistence extends pip_services3_mongoose_node_1.MongoosePers
     }
     writeChunk(correlationId, token, chunk, callback) {
         let item = this.tokenToInfo(token);
+        chunk = chunk || "";
         let buffer = Buffer.from(chunk, 'base64');
         this._storage.appendChunk(correlationId, item.id, buffer, (err, chunks) => {
             callback(err, token);
         });
     }
     endWrite(correlationId, token, chunk, callback) {
+        chunk = chunk || "";
         let buffer = Buffer.from(chunk, 'base64');
         let item = this.tokenToInfo(token);
         let id = item.id;

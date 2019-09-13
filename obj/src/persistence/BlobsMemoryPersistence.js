@@ -126,7 +126,7 @@ class BlobsMemoryPersistence extends pip_services3_data_node_1.IdentifiableMemor
             return;
         }
         let buffer = new Buffer("", "base64");
-        if (chunk)
+        if (chunk != null && chunk.length > 0)
             buffer = Buffer.from(chunk, 'base64');
         this._content[id] = Buffer.concat([oldBuffer, buffer]);
         callback(null, token);

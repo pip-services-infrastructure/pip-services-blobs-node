@@ -83,11 +83,13 @@ export class BlobsController implements IConfigurable, IReferenceable, ICommanda
 
     public writeBlobChunk(correlationId: string, token: string, chunk: string,
         callback: (err: any, token: string) => void): void {
+        chunk = chunk || "";
         this._persistence.writeChunk(correlationId, token, chunk, callback);
     }
 
     public endBlobWrite(correlationId: string, token: string, chunk: string,
         callback?: (err: any, blob: BlobInfoV1) => void): void {
+        chunk = chunk || "";
         this._persistence.endWrite(correlationId, token, chunk, callback);
     }
 

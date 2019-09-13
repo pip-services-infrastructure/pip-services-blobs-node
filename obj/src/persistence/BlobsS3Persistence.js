@@ -380,6 +380,7 @@ class BlobsS3Persistence {
             return;
         }
         let id = tokens[0];
+        chunk = chunk || "";
         let buffer = Buffer.from(chunk, 'base64');
         this._storage.appendChunk(correlationId, id, buffer, (err, size) => {
             if (err == null && size >= this._minChunkSize)
@@ -397,6 +398,7 @@ class BlobsS3Persistence {
             return;
         }
         let id = tokens[0];
+        chunk = chunk || "";
         let buffer = Buffer.from(chunk, 'base64');
         let append = false;
         let uri = null;

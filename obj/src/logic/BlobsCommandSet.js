@@ -80,7 +80,7 @@ class BlobsCommandSet extends pip_services3_commons_node_1.CommandSet {
     makeEndBlobWriteCommand() {
         return new pip_services3_commons_node_2.Command("end_blob_write", new pip_services3_commons_node_5.ObjectSchema(true)
             .withRequiredProperty("token", pip_services3_commons_node_7.TypeCode.String)
-            .withRequiredProperty("chunk", pip_services3_commons_node_7.TypeCode.String), (correlationId, args, callback) => {
+            .withOptionalProperty("chunk", pip_services3_commons_node_7.TypeCode.String), (correlationId, args, callback) => {
             let token = args.getAsNullableString("token");
             let chunk = args.getAsNullableString("chunk");
             this._logic.endBlobWrite(correlationId, token, chunk, callback);

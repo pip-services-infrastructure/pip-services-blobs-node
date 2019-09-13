@@ -75,6 +75,7 @@ class BlobsFilePersistence extends BlobsMemoryPersistence_1.BlobsMemoryPersisten
     }
     writeChunk(correlationId, token, chunk, callback) {
         let id = token;
+        chunk = chunk || "";
         let buffer = Buffer.from(chunk, 'base64');
         this._storage.appendChunk(correlationId, id, buffer, (err, chunks) => {
             callback(err, token);
@@ -82,6 +83,7 @@ class BlobsFilePersistence extends BlobsMemoryPersistence_1.BlobsMemoryPersisten
     }
     endWrite(correlationId, token, chunk, callback) {
         let id = token;
+        chunk = chunk || "";
         let buffer = Buffer.from(chunk, 'base64');
         let size = buffer.length;
         let append = false;

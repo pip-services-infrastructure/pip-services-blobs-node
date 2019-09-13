@@ -126,7 +126,7 @@ export class BlobsCommandSet extends CommandSet {
 			"end_blob_write",
 			new ObjectSchema(true)
                 .withRequiredProperty("token", TypeCode.String)
-                .withRequiredProperty("chunk", TypeCode.String),				
+                .withOptionalProperty("chunk", TypeCode.String),				
             (correlationId: string, args: Parameters, callback: (err: any, result: any) => void) => {
                 let token = args.getAsNullableString("token");
                 let chunk = args.getAsNullableString("chunk");

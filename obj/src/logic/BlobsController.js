@@ -48,9 +48,11 @@ class BlobsController {
         this._persistence.beginWrite(correlationId, blob, callback);
     }
     writeBlobChunk(correlationId, token, chunk, callback) {
+        chunk = chunk || "";
         this._persistence.writeChunk(correlationId, token, chunk, callback);
     }
     endBlobWrite(correlationId, token, chunk, callback) {
+        chunk = chunk || "";
         this._persistence.endWrite(correlationId, token, chunk, callback);
     }
     abortBlobWrite(correlationId, token, callback) {
