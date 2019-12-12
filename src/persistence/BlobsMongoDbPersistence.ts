@@ -119,7 +119,7 @@ export class BlobsMongoDbPersistence  extends MongoosePersistence implements IBl
 
     public getPageByFilter(correlationId: string, filter: FilterParams, paging: PagingParams,
         callback: (err: any, page: DataPage<BlobInfoV1>) => void): void {
-        let collection = this._connection.db.collection(this._collection + '.files');
+        let collection = this._connection.getDatabase().collection(this._collection + '.files');
         let criteria = this.composeFilter(filter);
 
         // Adjust max item count based on configuration
@@ -165,7 +165,7 @@ export class BlobsMongoDbPersistence  extends MongoosePersistence implements IBl
 
     public getListByIds(correlationId: string, ids: string[],
         callback: (err: any, items: BlobInfoV1[]) => void): void {
-        let collection = this._connection.db.collection(this._collection + '.files');
+        let collection = this._connection.getDatabase().collection(this._collection + '.files');
         let criteria = {
             filename: { $in: ids }
         };
@@ -190,7 +190,7 @@ export class BlobsMongoDbPersistence  extends MongoosePersistence implements IBl
     public getOneById(correlationId: string, id: string,
         callback: (err: any, item: BlobInfoV1) => void): void {
 
-        let collection = this._connection.db.collection(this._collection + '.files');
+        let collection = this._connection.getDatabase().collection(this._collection + '.files');
         let criteria = {
             filename: id
         };
@@ -209,7 +209,7 @@ export class BlobsMongoDbPersistence  extends MongoosePersistence implements IBl
     public update(correlationId: string, item: BlobInfoV1,
         callback: (err: any, item: BlobInfoV1) => void): void {
 
-        let collection = this._connection.db.collection(this._collection + '.files');
+        let collection = this._connection.getDatabase().collection(this._collection + '.files');
         let criteria = {
             filename: item.id
         };
@@ -239,7 +239,7 @@ export class BlobsMongoDbPersistence  extends MongoosePersistence implements IBl
     public markCompleted(correlationId: string, ids: string[],
         callback: (err: any) => void): void {
 
-        let collection = this._connection.db.collection(this._collection + '.files');
+        let collection = this._connection.getDatabase().collection(this._collection + '.files');
         let criteria = {
             filename: { $in: ids }
         };
@@ -348,7 +348,7 @@ export class BlobsMongoDbPersistence  extends MongoosePersistence implements IBl
 
                     // Open and seek to define blob size
                     let gs = new this._GridStore(
-                        this._connection.db, id, "w", 
+                        this._connection.getDatabase(), id, "w", 
                         { 
                             root: this._collection,
                             content_type: item.content_type,
@@ -379,7 +379,7 @@ export class BlobsMongoDbPersistence  extends MongoosePersistence implements IBl
 
                 // If it's the first chunk then upload it without writing to temp file
                 let gs = new this._GridStore(
-                    this._connection.db, id, "w", 
+                    this._connection.getDatabase(), id, "w", 
                     { 
                         root: this._collection,
                         content_type: item.content_type,
@@ -432,7 +432,7 @@ export class BlobsMongoDbPersistence  extends MongoosePersistence implements IBl
     public beginRead(correlationId: string, id: string,
         callback: (err: any, item: BlobInfoV1) => void): void {
 
-        this._GridStore.exist(this._connection.db, id, this._collection, (err, exist) => {
+        this._GridStore.exist(this._connection.getDatabase(), id, this._collection, (err, exist) => {
             if (err == null && exist == false) {
                 err = new NotFoundException(correlationId, 'BLOB_NOT_FOUND', 'Blob ' + id + ' was not found')
                     .withDetails('blob_id', id);
@@ -443,7 +443,7 @@ export class BlobsMongoDbPersistence  extends MongoosePersistence implements IBl
             }
 
             // Open and seek to define blob size
-            let gs = new this._GridStore(this._connection.db, id, "r", { root: this._collection });
+            let gs = new this._GridStore(this._connection.getDatabase(), id, "r", { root: this._collection });
             gs.open((err, gs) => {
                 if (err != null) {
                     callback(err, null);
@@ -463,7 +463,7 @@ export class BlobsMongoDbPersistence  extends MongoosePersistence implements IBl
     public readChunk(correlationId: string, id: string, skip: number, take: number,
         callback: (err: any, chunk: string) => void): void {
 
-        this._GridStore.read(this._connection.db, id, take, skip, { root: this._collection }, (err, data) => {
+        this._GridStore.read(this._connection.getDatabase(), id, take, skip, { root: this._collection }, (err, data) => {
             if (err) {
                 callback(err, null);
                 return;
@@ -480,19 +480,19 @@ export class BlobsMongoDbPersistence  extends MongoosePersistence implements IBl
     }
 
     public deleteById(correlationId: string, id: string, callback?: (err: any) => void): void {
-        this._GridStore.unlink(this._connection.db, id, { root: this._collection }, (err, result) => {
+        this._GridStore.unlink(this._connection.getDatabase(), id, { root: this._collection }, (err, result) => {
             if (callback) callback(err);
         });
     }
 
     public deleteByIds(correlationId: string, ids: string[], callback?: (err: any) => void): void {
-        this._GridStore.unlink(this._connection.db, ids, { root: this._collection }, (err, result) => {
+        this._GridStore.unlink(this._connection.getDatabase(), ids, { root: this._collection }, (err, result) => {
             if (callback) callback(err);
         });
     }
 
     public clear(correlationId: string, callback?: (err: any) => void): void {
-        this._GridStore.list(this._connection.db, this._collection, (err, ids) => {
+        this._GridStore.list(this._connection.getDatabase(), this._collection, (err, ids) => {
             if (err) {
                 if (callback) callback(err);
                 return;
@@ -504,7 +504,7 @@ export class BlobsMongoDbPersistence  extends MongoosePersistence implements IBl
                     return;
                 }
 
-                this._GridStore.unlink(this._connection.db, id, { root: this._collection }, (err, result) => {
+                this._GridStore.unlink(this._connection.getDatabase(), id, { root: this._collection }, (err, result) => {
                     callback(err);
                 });
             }, callback);

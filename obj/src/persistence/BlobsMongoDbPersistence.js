@@ -92,7 +92,7 @@ class BlobsMongoDbPersistence extends pip_services3_mongoose_node_1.MongoosePers
         return criteria.length > 0 ? { $and: criteria } : {};
     }
     getPageByFilter(correlationId, filter, paging, callback) {
-        let collection = this._connection.db.collection(this._collection + '.files');
+        let collection = this._connection.getDatabase().collection(this._collection + '.files');
         let criteria = this.composeFilter(filter);
         // Adjust max item count based on configuration
         let options = {};
@@ -130,7 +130,7 @@ class BlobsMongoDbPersistence extends pip_services3_mongoose_node_1.MongoosePers
         });
     }
     getListByIds(correlationId, ids, callback) {
-        let collection = this._connection.db.collection(this._collection + '.files');
+        let collection = this._connection.getDatabase().collection(this._collection + '.files');
         let criteria = {
             filename: { $in: ids }
         };
@@ -148,7 +148,7 @@ class BlobsMongoDbPersistence extends pip_services3_mongoose_node_1.MongoosePers
         });
     }
     getOneById(correlationId, id, callback) {
-        let collection = this._connection.db.collection(this._collection + '.files');
+        let collection = this._connection.getDatabase().collection(this._collection + '.files');
         let criteria = {
             filename: id
         };
@@ -162,7 +162,7 @@ class BlobsMongoDbPersistence extends pip_services3_mongoose_node_1.MongoosePers
         });
     }
     update(correlationId, item, callback) {
-        let collection = this._connection.db.collection(this._collection + '.files');
+        let collection = this._connection.getDatabase().collection(this._collection + '.files');
         let criteria = {
             filename: item.id
         };
@@ -187,7 +187,7 @@ class BlobsMongoDbPersistence extends pip_services3_mongoose_node_1.MongoosePers
         });
     }
     markCompleted(correlationId, ids, callback) {
-        let collection = this._connection.db.collection(this._collection + '.files');
+        let collection = this._connection.getDatabase().collection(this._collection + '.files');
         let criteria = {
             filename: { $in: ids }
         };
@@ -273,7 +273,7 @@ class BlobsMongoDbPersistence extends pip_services3_mongoose_node_1.MongoosePers
                         return;
                     }
                     // Open and seek to define blob size
-                    let gs = new this._GridStore(this._connection.db, id, "w", {
+                    let gs = new this._GridStore(this._connection.getDatabase(), id, "w", {
                         root: this._collection,
                         content_type: item.content_type,
                         metadata: metadata
@@ -301,7 +301,7 @@ class BlobsMongoDbPersistence extends pip_services3_mongoose_node_1.MongoosePers
                     return;
                 }
                 // If it's the first chunk then upload it without writing to temp file
-                let gs = new this._GridStore(this._connection.db, id, "w", {
+                let gs = new this._GridStore(this._connection.getDatabase(), id, "w", {
                     root: this._collection,
                     content_type: item.content_type,
                     metadata: metadata
@@ -347,7 +347,7 @@ class BlobsMongoDbPersistence extends pip_services3_mongoose_node_1.MongoosePers
         };
     }
     beginRead(correlationId, id, callback) {
-        this._GridStore.exist(this._connection.db, id, this._collection, (err, exist) => {
+        this._GridStore.exist(this._connection.getDatabase(), id, this._collection, (err, exist) => {
             if (err == null && exist == false) {
                 err = new pip_services3_commons_node_3.NotFoundException(correlationId, 'BLOB_NOT_FOUND', 'Blob ' + id + ' was not found')
                     .withDetails('blob_id', id);
@@ -357,7 +357,7 @@ class BlobsMongoDbPersistence extends pip_services3_mongoose_node_1.MongoosePers
                 return;
             }
             // Open and seek to define blob size
-            let gs = new this._GridStore(this._connection.db, id, "r", { root: this._collection });
+            let gs = new this._GridStore(this._connection.getDatabase(), id, "r", { root: this._collection });
             gs.open((err, gs) => {
                 if (err != null) {
                     callback(err, null);
@@ -375,7 +375,7 @@ class BlobsMongoDbPersistence extends pip_services3_mongoose_node_1.MongoosePers
         });
     }
     readChunk(correlationId, id, skip, take, callback) {
-        this._GridStore.read(this._connection.db, id, take, skip, { root: this._collection }, (err, data) => {
+        this._GridStore.read(this._connection.getDatabase(), id, take, skip, { root: this._collection }, (err, data) => {
             if (err) {
                 callback(err, null);
                 return;
@@ -389,19 +389,19 @@ class BlobsMongoDbPersistence extends pip_services3_mongoose_node_1.MongoosePers
             callback(null);
     }
     deleteById(correlationId, id, callback) {
-        this._GridStore.unlink(this._connection.db, id, { root: this._collection }, (err, result) => {
+        this._GridStore.unlink(this._connection.getDatabase(), id, { root: this._collection }, (err, result) => {
             if (callback)
                 callback(err);
         });
     }
     deleteByIds(correlationId, ids, callback) {
-        this._GridStore.unlink(this._connection.db, ids, { root: this._collection }, (err, result) => {
+        this._GridStore.unlink(this._connection.getDatabase(), ids, { root: this._collection }, (err, result) => {
             if (callback)
                 callback(err);
         });
     }
     clear(correlationId, callback) {
-        this._GridStore.list(this._connection.db, this._collection, (err, ids) => {
+        this._GridStore.list(this._connection.getDatabase(), this._collection, (err, ids) => {
             if (err) {
                 if (callback)
                     callback(err);
@@ -412,7 +412,7 @@ class BlobsMongoDbPersistence extends pip_services3_mongoose_node_1.MongoosePers
                     callback();
                     return;
                 }
-                this._GridStore.unlink(this._connection.db, id, { root: this._collection }, (err, result) => {
+                this._GridStore.unlink(this._connection.getDatabase(), id, { root: this._collection }, (err, result) => {
                     callback(err);
                 });
             }, callback);
