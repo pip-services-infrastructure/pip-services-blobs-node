@@ -6,7 +6,7 @@ import { DataPage } from 'pip-services3-commons-node';
 import { BlobInfoV1 } from '../data/version1/BlobInfoV1';
 import { IBlobsPersistence } from './IBlobsPersistence';
 import { TempBlobStorage } from './TempBlobStorage';
-export declare class BlobsMongoDbPersistence extends MongoosePersistence implements IBlobsPersistence {
+export declare class BlobsMongoDbPersistence extends MongoosePersistence<BlobInfoV1> implements IBlobsPersistence {
     protected _GridStore: any;
     protected _storage: TempBlobStorage;
     protected _maxBlobSize: number;
