@@ -56,7 +56,7 @@
         "@types/lodash": "^4.0.0",
         "@types/async": "^2.0.0",
         "@types/chai": "*",
-        "@types/mocha": "*",
+        "@types/mocha": "^7.0.0",
         "@types/mongodb": "^2.1.38",
         "@types/mongoose": "^4.7.4",
         "restify": "^4.3.0",
@@ -66,6 +66,6 @@
         "stream-buffers": "*",
         "chai": "*",
         "memjs": "*",
-        "mocha": "*"
+        "mocha": "^7.0.0"
     }
 }
