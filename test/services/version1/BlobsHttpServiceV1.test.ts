@@ -3,7 +3,7 @@ let async = require('async');
 let restify = require('restify');
 let assert = require('chai').assert;
 
-import { ConfigParams } from 'pip-services3-commons-node';
+import { ConfigParams, FilterParams } from 'pip-services3-commons-node';
 import { Descriptor } from 'pip-services3-commons-node';
 import { References } from 'pip-services3-commons-node';
 import { IdGenerator } from 'pip-services3-commons-node';
@@ -156,6 +156,102 @@ suite('BlobsHttpServiceV1', ()=> {
                         assert.isNull(err);
 
                         assert.lengthOf(page.data, 1);
+
+                        callback();
+                    }
+                );
+            },
+        // Delete blob
+            (callback) => {
+                rest.post('/v1/blobs/delete_blobs_by_ids',
+                    {
+                        blob_ids: [blobId]
+                    },
+                    (err, req, res) => {
+                        assert.isNull(err);
+                        callback();
+                    }
+                );
+            },
+        // Try to get deleted blob
+            (callback) => {
+                rest.post('/v1/blobs/get_blob_by_id',
+                    {
+                        blob_id: blobId
+                    },
+                    (err, req, res, blob) => {
+                        assert.isNull(err);
+                        //assert.isNull(blob);
+                        callback();
+                    }
+                )
+            }
+        ], done);
+    });
+
+    test('Blob expiration', (done) => {
+        let blobId = IdGenerator.nextLong();
+        let token: string = null;
+
+        async.series([
+        // Start writing blob
+            (callback) => {
+                let blob = new BlobInfoV1(
+                    blobId, 'test', 'file-' + blobId + '.dat', 6, 'application/binary', new Date(1980, 1, 1)
+                );
+
+                rest.post('/v1/blobs/begin_blob_write',
+                    {
+                        blob: blob
+                    },
+                    (err, req, res, tok) => {
+                        assert.isNull(err);
+                        token = tok;
+                        callback();
+                    }
+                );
+            },
+        // Write blob
+            (callback) => {
+                let chunk = Buffer.from([1, 2, 3]).toString('base64');
+
+                rest.post('/v1/blobs/write_blob_chunk',
+                    {
+                        token: token,
+                        chunk: chunk
+                    },
+                    (err, req, res, tok) => {
+                        assert.isNull(err);
+                        token = tok;
+                        callback();
+                    }
+                );
+            },
+        // Finish writing blob
+            (callback) => {
+                let chunk = Buffer.from([4, 5, 6]).toString('base64');
+
+                rest.post('/v1/blobs/end_blob_write',
+                    {
+                        token: token,
+                        chunk: chunk
+                    },
+                    (err, req, res, blob) => {
+                        assert.isNull(err);
+                        callback();
+                    }
+                );
+            },
+        // Get blobs
+            (callback) => {
+                rest.post('/v1/blobs/get_blobs_by_filter',
+                    {
+                        filter: FilterParams.fromTuples('expired', false)
+                    },
+                    (err, req, res, page) => {
+                        assert.isNull(err);
+
+                        assert.lengthOf(page.data, 0);
 
                         callback();
                     }

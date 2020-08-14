@@ -9,6 +9,7 @@ const pip_services3_commons_node_6 = require("pip-services3-commons-node");
 const pip_services3_commons_node_7 = require("pip-services3-commons-node");
 const pip_services3_commons_node_8 = require("pip-services3-commons-node");
 const pip_services3_commons_node_9 = require("pip-services3-commons-node");
+const pip_services3_commons_node_10 = require("pip-services3-commons-node");
 const BlobInfoV1Schema_1 = require("../data/version1/BlobInfoV1Schema");
 class BlobsCommandSet extends pip_services3_commons_node_1.CommandSet {
     constructor(logic) {
@@ -64,7 +65,7 @@ class BlobsCommandSet extends pip_services3_commons_node_1.CommandSet {
     makeBeginBlobWriteCommand() {
         return new pip_services3_commons_node_2.Command("begin_blob_write", new pip_services3_commons_node_5.ObjectSchema(true)
             .withRequiredProperty("blob", new BlobInfoV1Schema_1.BlobInfoV1Schema()), (correlationId, args, callback) => {
-            let blob = args.get("blob");
+            let blob = this.fixBlob(args.get("blob"));
             this._logic.beginBlobWrite(correlationId, blob, callback);
         });
     }
@@ -155,6 +156,13 @@ class BlobsCommandSet extends pip_services3_commons_node_1.CommandSet {
                 callback(err, null);
             });
         });
+    }
+    fixBlob(blob) {
+        if (blob == null)
+            return null;
+        blob.create_time = pip_services3_commons_node_10.DateTimeConverter.toNullableDateTime(blob.create_time);
+        blob.expire_time = pip_services3_commons_node_10.DateTimeConverter.toNullableDateTime(blob.expire_time);
+        return blob;
     }
 }
 exports.BlobsCommandSet = BlobsCommandSet;

@@ -1,6 +1,6 @@
 {
     "name": "pip-services-blobs-node",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "registry": "pipdevs",
-    "build": 27
+    "build": 28
 }
