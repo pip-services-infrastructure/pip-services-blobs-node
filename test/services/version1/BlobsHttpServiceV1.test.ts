@@ -151,6 +151,9 @@ suite('BlobsHttpServiceV1', ()=> {
             (callback) => {
                 rest.post('/v1/blobs/get_blobs_by_filter',
                     {
+                        // filter: FilterParams.fromTuples(
+                        //     'expired', false
+                        // )
                     },
                     (err, req, res, page) => {
                         assert.isNull(err);
