@@ -18,5 +18,4 @@ export declare class BlobsCommandSet extends CommandSet {
     private makeMarkBlobsCompletedCommand;
     private makeDeleteBlobByIdCommand;
     private makeDeleteBlobsByIdsCommand;
-    private fixBlob;
 }

@@ -12,6 +12,7 @@ import { DataPage } from 'pip-services3-commons-node';
 import { ICommandable } from 'pip-services3-commons-node';
 import { CommandSet } from 'pip-services3-commons-node';
 import { IdGenerator } from 'pip-services3-commons-node';
+import { DateTimeConverter } from 'pip-services3-commons-node';
 
 import { BlobInfoV1 } from '../data/version1/BlobInfoV1';
 import { IBlobsPersistence } from '../persistence/IBlobsPersistence';
@@ -73,11 +74,21 @@ export class BlobsController implements IConfigurable, IReferenceable, ICommanda
         return name;
     }
 
+	private fixBlob(blob: BlobInfoV1): BlobInfoV1 {
+        if (blob == null) return null;
+
+        blob.create_time = DateTimeConverter.toNullableDateTime(blob.create_time);
+        blob.expire_time = DateTimeConverter.toNullableDateTime(blob.expire_time);
+        blob.name = this.normalizeName(blob.name);
+
+        return blob;
+    }
+
     public beginBlobWrite(correlationId: string, blob: BlobInfoV1,
         callback: (err: any, token: string) => void): void {
         blob.id = blob.id || IdGenerator.nextLong();
-        blob.name = this.normalizeName(blob.name);
-
+        blob = this.fixBlob(blob);
+        
         this._persistence.beginWrite(correlationId, blob, callback);
     }
 

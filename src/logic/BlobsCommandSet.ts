@@ -1,7 +1,6 @@
 import { CommandSet } from 'pip-services3-commons-node';
 import { ICommand } from 'pip-services3-commons-node';
 import { Command } from 'pip-services3-commons-node';
-import { Schema } from 'pip-services3-commons-node';
 import { Parameters } from 'pip-services3-commons-node';
 import { FilterParams } from 'pip-services3-commons-node';
 import { PagingParams } from 'pip-services3-commons-node';
@@ -10,7 +9,6 @@ import { ArraySchema } from 'pip-services3-commons-node';
 import { TypeCode } from 'pip-services3-commons-node';
 import { FilterParamsSchema } from 'pip-services3-commons-node';
 import { PagingParamsSchema } from 'pip-services3-commons-node';
-import { DateTimeConverter } from 'pip-services3-commons-node';
 
 import { IBlobsController } from './IBlobsController';
 import { BlobInfoV1Schema } from '../data/version1/BlobInfoV1Schema';
@@ -102,7 +100,7 @@ export class BlobsCommandSet extends CommandSet {
 			new ObjectSchema(true)
 				.withRequiredProperty("blob", new BlobInfoV1Schema()),
             (correlationId: string, args: Parameters, callback: (err: any, result: any) => void) => {
-				let blob = this.fixBlob(args.get("blob"));
+				let blob = args.get("blob");
                 this._logic.beginBlobWrite(correlationId, blob, callback);
             }
 		);
@@ -246,12 +244,4 @@ export class BlobsCommandSet extends CommandSet {
 		);
 	}
 
-	private fixBlob(blob: BlobInfoV1): BlobInfoV1 {
-        if (blob == null) return null;
-
-        blob.create_time = DateTimeConverter.toNullableDateTime(blob.create_time);
-        blob.expire_time = DateTimeConverter.toNullableDateTime(blob.expire_time);
-
-        return blob;
-    }
 }

@@ -4,6 +4,7 @@ let async = require('async');
 const pip_services3_commons_node_1 = require("pip-services3-commons-node");
 const pip_services3_commons_node_2 = require("pip-services3-commons-node");
 const pip_services3_commons_node_3 = require("pip-services3-commons-node");
+const pip_services3_commons_node_4 = require("pip-services3-commons-node");
 const BlobsCommandSet_1 = require("./BlobsCommandSet");
 class BlobsController {
     constructor() {
@@ -42,9 +43,17 @@ class BlobsController {
             name = name.substring(pos + 1);
         return name;
     }
+    fixBlob(blob) {
+        if (blob == null)
+            return null;
+        blob.create_time = pip_services3_commons_node_4.DateTimeConverter.toNullableDateTime(blob.create_time);
+        blob.expire_time = pip_services3_commons_node_4.DateTimeConverter.toNullableDateTime(blob.expire_time);
+        blob.name = this.normalizeName(blob.name);
+        return blob;
+    }
     beginBlobWrite(correlationId, blob, callback) {
         blob.id = blob.id || pip_services3_commons_node_3.IdGenerator.nextLong();
-        blob.name = this.normalizeName(blob.name);
+        blob = this.fixBlob(blob);
         this._persistence.beginWrite(correlationId, blob, callback);
     }
     writeBlobChunk(correlationId, token, chunk, callback) {
