@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BlobInfoV1 = void 0;
 class BlobInfoV1 {
     constructor(id, group, name, size, content_type, expire_time) {
         this.id = id;

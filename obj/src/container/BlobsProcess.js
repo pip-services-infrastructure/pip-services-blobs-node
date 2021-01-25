@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BlobsProcess = void 0;
 const pip_services3_container_node_1 = require("pip-services3-container-node");
 const BlobsServiceFactory_1 = require("../build/BlobsServiceFactory");
 const pip_services3_rpc_node_1 = require("pip-services3-rpc-node");

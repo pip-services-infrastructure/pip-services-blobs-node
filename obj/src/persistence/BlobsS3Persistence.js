@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BlobsS3Persistence = void 0;
 let _ = require('lodash');
 let async = require('async');
 let fs = require('fs');
