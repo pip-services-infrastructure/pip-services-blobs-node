@@ -34,7 +34,7 @@ import { TempBlobStorage } from './TempBlobStorage';
 
 export class BlobsS3Persistence
     implements IOpenable, IConfigurable, IReferenceable, IBlobsPersistence {
-    
+
     private static readonly _defaultConfig: ConfigParams = ConfigParams.fromTuples(
         "connection.protocol", "aws",
         "connection.region", null,
@@ -44,7 +44,7 @@ export class BlobsS3Persistence
 
         "credential.access_id", null,
         "credential.access_key", null,
-        
+
         "options.reduced_redundancy", true,
         "options.max_blob_size", 10 * 1024,
         "options.connect_timeout", 30000
@@ -54,7 +54,7 @@ export class BlobsS3Persistence
     protected _opened: boolean = false;
     protected _connection: AwsConnectionParams;
     protected _bucket: string;
- 
+
     protected _connectTimeout: number = 30000;
     protected _minChunkSize: number = 5 * 1024 * 1024;
     protected _maxBlobSize: number = 100 * 1024;
@@ -70,7 +70,7 @@ export class BlobsS3Persistence
     public configure(config: ConfigParams): void {
         config = config.setDefaults(BlobsS3Persistence._defaultConfig);
         this._connectionResolver.configure(config);
-		this._dependencyResolver.configure(config);
+        this._dependencyResolver.configure(config);
         this._storage.configure(config);
 
         this._minChunkSize = config.getAsLongWithDefault('options.min_chunk_size', this._minChunkSize);
@@ -106,7 +106,7 @@ export class BlobsS3Persistence
             },
             (callback) => {
                 let aws = require('aws-sdk');
-                
+
                 aws.config.update({
                     accessKeyId: this._connection.getAccessId(),
                     secretAccessKey: this._connection.getAccessKey(),
@@ -293,8 +293,8 @@ export class BlobsS3Persistence
 
                             callback();
                         });
-                    } 
-                );    
+                    }
+                );
             },
             (err) => {
                 let page = err == null ? new DataPage<BlobInfoV1>(result, null) : null;
@@ -307,15 +307,15 @@ export class BlobsS3Persistence
         callback: (err: any, items: BlobInfoV1[]) => void): void {
         let items: BlobInfoV1[] = [];
         async.each(
-            ids, 
+            ids,
             (id, callback) => {
                 this.getOneById(correlationId, id, (err, item) => {
                     if (item) items.push(item);
                     callback(err);
                 });
-            }, 
+            },
             (err) => {
-                callback(err, err == null ? items: null);
+                callback(err, err == null ? items : null);
             }
         );
     }
@@ -328,17 +328,17 @@ export class BlobsS3Persistence
             Key: id
         };
 
-         this._s3.headObject(
-             params,
-             (err, data) => {
+        this._s3.headObject(
+            params,
+            (err, data) => {
                 if (err && err.code == "NotFound") err = null;
 
                 if (err == null && data != null) {
                     let item = this.dataToInfo(id, data);
                     callback(null, item);
                 } else callback(err, null);
-             } 
-        );    
+            }
+        );
     }
 
     public update(correlationId: string, item: BlobInfoV1,
@@ -361,15 +361,16 @@ export class BlobsS3Persistence
                 name: item.name,
                 group: item.group,
                 completed: StringConverter.toString(item.completed)
-            }
+            },
+            MetadataDirective: "REPLACE"
         };
 
-         this._s3.copyObject(
-             params,
-             (err, data) => {
-                 item = err == null ? item : null;
-                 callback(err, item);
-             } 
+        this._s3.copyObject(
+            params,
+            (err, data) => {
+                item = err == null ? item : null;
+                callback(err, item);
+            }
         );
     }
 
@@ -423,14 +424,14 @@ export class BlobsS3Persistence
             }
         };
 
-         this._s3.createMultipartUpload(
-             params,
-             (err, data) => {
+        this._s3.createMultipartUpload(
+            params,
+            (err, data) => {
                 if (err == null && data != null) {
                     let token = item.id + ';' + data.UploadId;
                     callback(null, token);
                 } else callback(err, null);
-             } 
+            }
         );
     }
 
@@ -460,7 +461,7 @@ export class BlobsS3Persistence
                 if (data != null)
                     token = token + ';' + data.ETag;
                 callback(err, token);
-            } 
+            }
         );
     }
 
@@ -485,7 +486,7 @@ export class BlobsS3Persistence
                         callback(err, token);
                     });
                 }
-            } 
+            }
         );
     }
 
@@ -580,7 +581,7 @@ export class BlobsS3Persistence
                     params,
                     (err, data) => {
                         callback(err);
-                    } 
+                    }
                 );
             }
         ], (err) => {
@@ -590,7 +591,7 @@ export class BlobsS3Persistence
         });
     }
 
-    public abortWrite(correlationId: string, token: string, 
+    public abortWrite(correlationId: string, token: string,
         callback?: (err: any) => void): void {
 
         let tokens = (token || '').split(';');
@@ -624,7 +625,7 @@ export class BlobsS3Persistence
             params,
             (err, data) => {
                 callback(err);
-            } 
+            }
         );
     }
 
@@ -634,8 +635,8 @@ export class BlobsS3Persistence
         this.getOneById(correlationId, id, (err, item) => {
             if (err == null && item == null) {
                 err = new NotFoundException(
-                    correlationId, 
-                    'BLOB_NOT_FOUND', 
+                    correlationId,
+                    'BLOB_NOT_FOUND',
                     'Blob ' + id + ' was not found'
                 ).withDetails('blob_id', id);
             }
@@ -653,15 +654,15 @@ export class BlobsS3Persistence
             Range: 'bytes=' + skip + '-' + (skip + take - 1)
         };
 
-         this._s3.getObject(
-             params,
-             (err, data) => {
+        this._s3.getObject(
+            params,
+            (err, data) => {
                 if (err == null && data != null) {
                     let chunk = data.Body.toString('base64');
                     callback(null, chunk);
                 } else callback(err, null);
-             } 
-        );    
+            }
+        );
     }
 
     public endRead(correlationId: string, id: string,
@@ -698,9 +699,9 @@ export class BlobsS3Persistence
             Bucket: this._bucket,
         };
 
-         this._s3.listObjects(
-             params,
-             (err, data) => {
+        this._s3.listObjects(
+            params,
+            (err, data) => {
                 if (err != null || data.Contents.length == 0) {
                     if (callback) callback(err);
                     return;
@@ -718,8 +719,8 @@ export class BlobsS3Persistence
                 })
 
                 this._s3.deleteObjects(params, callback);
-             } 
-        );    
+            }
+        );
 
     }
 

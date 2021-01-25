@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.BlobsS3Persistence = void 0;
 let _ = require('lodash');
 let async = require('async');
 let fs = require('fs');
@@ -275,7 +276,8 @@ class BlobsS3Persistence {
                 name: item.name,
                 group: item.group,
                 completed: pip_services3_commons_node_5.StringConverter.toString(item.completed)
-            }
+            },
+            MetadataDirective: "REPLACE"
         };
         this._s3.copyObject(params, (err, data) => {
             item = err == null ? item : null;

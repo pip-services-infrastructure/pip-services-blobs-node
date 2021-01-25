@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.BlobsMongoDbPersistence = void 0;
 let _ = require('lodash');
 let async = require('async');
 let stream = require('stream');
