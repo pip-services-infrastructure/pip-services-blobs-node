@@ -1,3 +1,8 @@
+<a name="1.1.5"></a> ### 1.1.5 (2021-01-25)
+
+#### Bug Fixes
+Fix update method in S3Bucket persistence
+
 <a name="1.0.0"></a> ### 1.0.0 (2016-06-27)
 
 #### Features
